@@ -14,18 +14,13 @@ const Footer = () => {
                                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-white">
                                     <Leaf className="h-6 w-6" />
                                 </div>
-
-                                <span className="text-xl font-bold text-white">
-                                    AgroMart
-                                    </span>
+                                <span className="text-xl font-bold text-white">AgroNexa</span>
                             </Link>
-
                             <p className="mt-5 max-w-xs text-sm leading-6 text-slate-400">
                                 A smart agriculture marketplace connecting farmers, buyers
                                 and agriculture experts.
                             </p>
                         </div>
-
                         <FooterColumn
                             title="Marketplace"
                             links={[
@@ -35,7 +30,6 @@ const Footer = () => {
                                 ["Experts", "/experts"],
                             ]}
                         />
-
                         <FooterColumn
                             title="Company"
                             links={[
@@ -45,7 +39,6 @@ const Footer = () => {
                                 ["Terms & Conditions", "/terms"],
                             ]}
                         />
-
                         <div>
                             <h3 className="font-semibold text-white">Contact</h3>
 
@@ -56,7 +49,6 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className="mt-12 flex flex-col justify-between gap-4 border-t border-slate-800 pt-6 text-sm text-slate-500 sm:flex-row">
                         <p>© {new Date().getFullYear()} AgroMart. All rights reserved.</p>
                         <p>Built for a smarter agriculture ecosystem.</p>
@@ -66,9 +58,7 @@ const Footer = () => {
         </>
     );
 };
-
 export default Footer;
-
 function FooterColumn({title, links,}: {
     title: string;
     links: [string, string][];

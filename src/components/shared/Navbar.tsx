@@ -19,7 +19,7 @@ const Navbar = () => {
 
                         <div>
                             <h1 className="text-xl font-bold tracking-tight text-green-700">
-                                AgroMart
+                                AgroNexa
                             </h1>
                             <p className="hidden text-[10px] font-medium text-slate-500 sm:block">
                                 Smart Agriculture Marketplace
