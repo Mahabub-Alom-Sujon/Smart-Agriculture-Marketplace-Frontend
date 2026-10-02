@@ -181,6 +181,15 @@ export function LoginForm() {
                         </button>
                     </div>
                     <GoogleLoginButton role={selectedRole} />
+                    <div className="text-center text-sm text-slate-600 pt-2">
+                        Don&apos;t have an account?{" "}
+                        <Link
+                            href="/register"
+                            className="font-medium text-green-600 transition hover:text-green-700 underline-offset-4 hover:underline"
+                        >
+                            Create a new account
+                        </Link>
+                    </div>
                 </form>
             </CardContent>
         </Card>

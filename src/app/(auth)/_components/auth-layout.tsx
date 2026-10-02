@@ -18,18 +18,18 @@ export function AuthPageLayout({
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.16),transparent_35%)]" />
                 <div className="relative z-10 flex w-full flex-col justify-items-center p-12 xl:p-16">
                     <div>
-                        <div className="flex items-center gap-3 text-white">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
-                                <Leaf className="h-7 w-7" />
-                            </div>
-
-                            <div>
-                                <h2 className="text-2xl font-bold">AgroNexa</h2>
-                                <p className="text-xs text-green-100">
-                                    Smart Agriculture Marketplace
-                                </p>
-                            </div>
-                        </div>
+                        {/*<div className="flex items-center gap-3 text-white">*/}
+                        {/*    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 backdrop-blur">*/}
+                        {/*        <Leaf className="h-7 w-7" />*/}
+                        {/*    </div>*/}
+                        {/*    <div>*/}
+                        {/*        <h2 className="text-2xl font-bold">AgroNexa</h2>*/}
+                        {/*        <p className="text-xs text-green-100">*/}
+                        {/*            Smart Agriculture Marketplace*/}
+                        {/*        </p>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <AuthHeader/>
                         <div className="mt-10 max-w-xl">
                             <p className="mb-4 font-semibold text-green-200">
                                 Smart Agriculture Platform

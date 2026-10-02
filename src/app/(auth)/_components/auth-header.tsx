@@ -11,10 +11,10 @@ export function AuthHeader() {
                 <Leaf className="h-6 w-6" />
             </div>
             <div>
-                <h1 className="text-xl font-bold tracking-tight text-green-700">
+                <h1 className="text-2xl font-bold text-white">
                     AgroNexa
                 </h1>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-xs text-green-100">
                     Smart Agriculture Marketplace
                 </p>
             </div>
