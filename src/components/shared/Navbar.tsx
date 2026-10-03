@@ -3,11 +3,15 @@ import React from 'react';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
+    Heart,
     Leaf,
     ShoppingCart,
 } from "lucide-react";
-
+import { useCart } from "@/components/providers/CartProvider";
+import { useWishlist } from "@/components/providers/WishlistProvider";
 const Navbar = () => {
+    const { cartCount } = useCart();
+    const { wishlistCount } = useWishlist();
     return (
         <>
             <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
@@ -65,11 +69,47 @@ const Navbar = () => {
                     </nav>
 
                     <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" className="relative">
-                            <ShoppingCart className="h-5 w-5" />
-                            <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[9px] text-white">
-                                2
-                            </span>
+                        {/* Wishlist */}
+                        <Button
+                            // asChild
+                            variant="ghost"
+                            size="icon"
+                            className="relative"
+                        >
+                            <Link
+                                href="/wishlist"
+                                aria-label="Wishlist"
+                            >
+                                <Heart className="h-5 w-5" />
+                                {wishlistCount > 0 && (
+                                    <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+                                    {wishlistCount > 99
+                                        ? "99+"
+                                        : wishlistCount}
+                                </span>
+                                )}
+                            </Link>
+                        </Button>
+                        {/* Cart */}
+                        <Button
+                            //asChild
+                            variant="ghost"
+                            size="icon"
+                            className="relative"
+                        >
+                            <Link
+                                href="/cart"
+                                aria-label="Shopping cart"
+                            >
+                                <ShoppingCart className="h-5 w-5" />
+                                {cartCount > 0 && (
+                                    <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[9px] font-bold text-white">
+                                    {cartCount > 99
+                                        ? "99+"
+                                        : cartCount}
+                                </span>
+                                )}
+                            </Link>
                         </Button>
                         <Button
                             variant="outline"
@@ -78,10 +118,7 @@ const Navbar = () => {
                         >
                             <Link href="/login">Login</Link>
                         </Button>
-
-                        <Button className="bg-green-600 hover:bg-green-700"
-                                //asChild
-                        >
+                        <Button className="bg-green-600 hover:bg-green-700">
                             <Link href="/register">Get Started</Link>
                         </Button>
                     </div>

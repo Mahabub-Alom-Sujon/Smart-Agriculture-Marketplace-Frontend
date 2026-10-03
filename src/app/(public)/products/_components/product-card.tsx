@@ -12,15 +12,30 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import type { Product } from "@/types/types.product";
+import { useCart } from "@/components/providers/CartProvider";
+import { useWishlist } from "@/components/providers/WishlistProvider";
 interface ProductCardProps {
     product: Product;
 }
 export function ProductCard({
     product,
 }: ProductCardProps) {
+    const { addToCart, isInCart} = useCart();
+    const { toggleWishlist, isInWishlist } = useWishlist();
     const isOutOfStock = product.quantity <= 0;
     const isLowStock = product.quantity > 0 && product.quantity < 10;
+    const isWishlisted = isInWishlist(product.id);
+    const productInCart = isInCart(product.id);
     const farmerInitials = product.farmer.name ?.slice(0, 2) .toUpperCase() || "FR";
+    const handleAddToCart = () => {
+        if (isOutOfStock) {
+            return;
+        }
+        addToCart(product);
+    };
+    const handleWishlist = () => {
+        toggleWishlist(product);
+    };
     return (
         <Card className="group overflow-hidden border-slate-200 bg-white p-0 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
             {/* Image Section */}
@@ -45,9 +60,13 @@ export function ProductCard({
                     type="button"
                     size="icon"
                     variant="secondary"
+                    onClick={handleWishlist}
+                    aria-label={ isWishlisted ? "Remove from wishlist" : "Add to wishlist" }
                     className="absolute right-3 top-3 z-10 h-9 w-9 rounded-full bg-white/80 shadow-sm backdrop-blur-sm hover:bg-white"
                 >
-                    <Heart className="h-4 w-4 text-slate-600 transition-colors hover:text-red-500" />
+                    <Heart
+                        className={`h-4 w-4 transition-colors ${ isWishlisted ? "fill-red-500 text-red-500" : "text-slate-600"}`}
+                    />
                 </Button>
                 {/* Low Stock */}
                 {isLowStock && (
@@ -144,10 +163,11 @@ export function ProductCard({
                         type="button"
                         size="sm"
                         disabled={isOutOfStock}
+                        onClick={handleAddToCart}
                         className="bg-green-600 transition-transform hover:bg-green-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         <ShoppingCart className="mr-1 h-3.5 w-3.5" />
-                        Add
+                        {productInCart ? "Add More" : "Add"}
                     </Button>
                 </div>
             </CardContent>
