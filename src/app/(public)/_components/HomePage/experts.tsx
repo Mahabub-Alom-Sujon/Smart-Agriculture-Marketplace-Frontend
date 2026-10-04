@@ -51,8 +51,8 @@ const Experts = () => {
                             </p>
                         </div>
 
-                        <Button variant="outline" className="hidden sm:flex">
-                            <Link href="/experts">
+                        <Button variant="outline" className="px-4 py-5 hidden sm:flex bg-green-600">
+                            <Link href="/experts" className="text-white inline-flex items-center">
                                 Find Experts
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>

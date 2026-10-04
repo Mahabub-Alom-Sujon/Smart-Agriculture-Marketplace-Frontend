@@ -65,10 +65,10 @@ const FeaturedProducts = () => {
                                 Fresh products directly from verified farmers.
                             </p>
                         </div>
-                        <Button variant="outline" className="hidden sm:flex bg-green-600">
-                            <Link className="text-white" href="/products">
+                        <Button variant="outline" className="px-4 py-5 hidden sm:flex  bg-green-600">
+                            <Link className="text-white inline-flex items-center gap-1" href="/products">
                                 Browse Marketplace
-                                {/*<ChevronRight className="ml-1 h-4 w-4" />*/}
+                                <ChevronRight className="ml-1 h-4 w-4" />
                             </Link>
                         </Button>
                     </div>

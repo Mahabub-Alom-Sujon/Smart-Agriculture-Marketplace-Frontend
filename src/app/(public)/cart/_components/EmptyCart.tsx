@@ -28,9 +28,9 @@ export default function EmptyCart() {
             {/* Button */}
             <Button
                 //asChild
-                className="mt-6 bg-green-600 hover:bg-green-700"
+                className="mt-6 px-4 py-5 bg-green-600 hover:bg-green-700"
             >
-                <Link href="/products">
+                <Link href="/products" className="inline-flex items-center gap-1">
                     Browse Products
                     <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

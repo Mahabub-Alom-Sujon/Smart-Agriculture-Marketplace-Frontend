@@ -42,7 +42,7 @@ export function ProductCard({
             <div className="relative h-52 w-full overflow-hidden bg-slate-100">
                 <Link href={`/products/${product.id}`}>
                     <Image
-                        src={product.image}
+                        src={product.image }
                         alt={product.name}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
