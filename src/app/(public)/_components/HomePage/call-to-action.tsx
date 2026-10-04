@@ -71,20 +71,20 @@ const CallToAction = () => {
                             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                                 <Button
                                     size="lg"
-                                    className="bg-white px-7 text-green-700 hover:bg-green-50"
+                                    className="px-5 py-6 bg-white px-7 text-green-700 hover:bg-green-50"
                                 >
-                                    <Link href="/products">
+                                    <Link href="/products" className="inline-flex items-center">
                                         Explore Marketplace
-                                        {/*<ArrowRight className="ml-2 h-4 w-4" />*/}
+                                        <ArrowRight className="ml-2 h-4 w-4" />
                                     </Link>
                                 </Button>
 
                                 <Button
                                     size="lg"
                                     variant="outline"
-                                    className="border-white/40 bg-transparent px-7 text-white hover:bg-white/10 hover:text-white"
+                                    className="px-5 py-6 border-white/40 bg-transparent px-7 text-white hover:bg-white/10 hover:text-white"
                                 >
-                                    <Link href="/register">
+                                    <Link href="/register" className="inline-flex items-center">
                                         Join AgroNexa
                                     </Link>
                                 </Button>
