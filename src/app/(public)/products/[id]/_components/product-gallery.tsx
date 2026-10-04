@@ -26,7 +26,7 @@ export function ProductGallery({
     return (
         <div className="rounded-2xl border bg-white p-4 shadow-sm">
             {/* Main Image */}
-            <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
+            <div className="relative h-[400px] overflow-hidden rounded-xl bg-muted sm:h-[400px] lg:h-[430px]">
                 <Image
                     src={product.image}
                     alt={product.name}
