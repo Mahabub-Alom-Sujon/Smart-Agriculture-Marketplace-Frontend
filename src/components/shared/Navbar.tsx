@@ -20,7 +20,6 @@ const Navbar = () => {
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-white">
                             <Leaf className="h-6 w-6" />
                         </div>
-
                         <div>
                             <h1 className="text-xl font-bold tracking-tight text-green-700">
                                 AgroNexa
@@ -30,7 +29,6 @@ const Navbar = () => {
                             </p>
                         </div>
                     </Link>
-
                     <nav className="hidden items-center gap-7 lg:flex">
                         <Link
                             href="/"
@@ -113,13 +111,13 @@ const Navbar = () => {
                         </Button>
                         <Button
                             variant="outline"
-                            className="hidden sm:inline-flex"
+                            className="px-4 hidden sm:inline-flex"
                             //asChild
                         >
-                            <Link href="/login">Login</Link>
+                            <Link className="text-sm" href="/login">Login</Link>
                         </Button>
-                        <Button className="bg-green-600 hover:bg-green-700">
-                            <Link href="/register">Get Started</Link>
+                        <Button className="px-4 bg-green-600 hover:bg-green-700">
+                            <Link className="text-sm" href="/register">Get Started</Link>
                         </Button>
                     </div>
                 </div>
