@@ -13,7 +13,7 @@ export const getAllFarmers = async (): Promise<FarmerResponse> => {
             },
             next: {
                 tags: ["farmers"],
-                revalidate: 60 * 5, // 5 minutes
+                revalidate: 300,
             },
         });
         const result: FarmerResponse = await response.json();

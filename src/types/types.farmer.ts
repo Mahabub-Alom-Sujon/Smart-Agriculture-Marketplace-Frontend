@@ -24,8 +24,20 @@ export interface Farmer {
     farms: Farm[];
 }
 
+/**
+ * GET /farmers
+ */
 export interface FarmerResponse {
     success: boolean;
     message: string;
     data: Farmer[];
+}
+
+/**
+ * GET /farmers/:id
+ */
+export interface SingleFarmerResponse {
+    success: boolean;
+    message: string;
+    data: Farmer;
 }

@@ -155,7 +155,7 @@ export default function FarmerCard({
             <div className="px-5 pb-5">
                 <Link
                     href={`/farmers/${farmer.id}`}
-                    className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-600"
+                    className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-green-600 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-700"
                 >
                     View Farmer
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
