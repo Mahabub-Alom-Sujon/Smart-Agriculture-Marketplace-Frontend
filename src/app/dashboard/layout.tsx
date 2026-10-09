@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/shared/Sidebar";
+import Sidebar from "@/components/dashboard/Sidebar";
 import Navbar from "@/components/shared/Navbar";
 import { getMe } from "@/service/getMe";
 interface DashboardLayoutProps {
