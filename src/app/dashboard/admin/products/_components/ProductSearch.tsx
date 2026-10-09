@@ -10,12 +10,12 @@ import {
 } from "react";
 import type { FormEvent } from "react";
 
-interface CategorySearchProps {
+interface ProductSearchProps {
     initialSearchTerm: string;
 }
-export default function CategorySearch({
+export default function ProductSearch({
     initialSearchTerm,
-}: CategorySearchProps) {
+}: ProductSearchProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
@@ -37,7 +37,7 @@ export default function CategorySearch({
         }
         params.set("page", "1");
         const query = params.toString();
-        router.push( query ? `/dashboard/admin/categories?${query}` : "/dashboard/admin/categories" );
+        router.push( query ? `/dashboard/admin/products?${query}` : "/dashboard/admin/products" );
     };
 
     const handleChange = (
@@ -45,7 +45,6 @@ export default function CategorySearch({
     ) => {
         const value = event.target.value;
         setSearchTerm(value);
-        // Input empty হলে URL থেকেও searchTerm remove হবে
         if (!value.trim()) {
             const params = new URLSearchParams(
                 searchParams.toString()
@@ -53,7 +52,7 @@ export default function CategorySearch({
             params.delete("searchTerm");
             params.set("page", "1");
             const query = params.toString();
-            router.push( query ? `/dashboard/admin/categories?${query}` : "/dashboard/admin/categories" );
+            router.push( query ? `/dashboard/admin/products?${query}` : "/dashboard/admin/products" );
         }
     };
 

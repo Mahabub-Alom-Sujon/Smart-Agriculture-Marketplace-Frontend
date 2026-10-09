@@ -21,12 +21,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-
 interface ICategory {
     id: string;
     name: string;
 }
-
 const ProductFilter = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -37,7 +35,6 @@ const ProductFilter = () => {
         setMinPrice(searchParams.get("minPrice") ?? "");
         setMaxPrice(searchParams.get("maxPrice") ?? "");
     }, [searchParams]);
-
     useEffect(() => {
         const timer = setTimeout(() => {
             const currentMinPrice = searchParams.get("minPrice") ?? "";
@@ -55,12 +52,12 @@ const ProductFilter = () => {
         const fetchCategories = async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories`);
-                const data = await res.json();
-                if (data.success) {
-                    setCategories(data.data);
+                const result = await res.json();
+                if (result.success && result.data && Array.isArray(result.data.data)) {
+                    setCategories(result.data.data);
                 }
             } catch (error) {
-                console.error(error);
+                console.error("Failed to fetch categories:", error);
             }
         };
         fetchCategories();
@@ -76,7 +73,6 @@ const ProductFilter = () => {
         params.set("page", "1");
         router.replace(`/products?${params.toString()}`);
     };
-
     const updateSort = (value: string | null) => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete("sortBy");
@@ -142,7 +138,6 @@ const ProductFilter = () => {
             </CardHeader>
 
             <CardContent className="space-y-5">
-                {/* Category */}
                 <div>
                     <label className="mb-2 block text-sm font-medium">Category</label>
                     <Select
@@ -218,19 +213,15 @@ const ProductFilter = () => {
                             <SelectItem value="5">
                                 ⭐ 5.0 & above
                             </SelectItem>
-
                             <SelectItem value="4">
                                 ⭐ 4.0 & above
                             </SelectItem>
-
                             <SelectItem value="3">
                                 ⭐ 3.0 & above
                             </SelectItem>
-
                             <SelectItem value="2">
                                 ⭐ 2.0 & above
                             </SelectItem>
-
                             <SelectItem value="1">
                                 ⭐ 1.0 & above
                             </SelectItem>

@@ -28,15 +28,11 @@ export default function CategoriesTable({
 
     const handleView = (categoryId: string) => {
         console.log("View category:", categoryId);
-
-        // Later:
         // router.push(`/dashboard/admin/categories/${categoryId}`);
     };
 
     const handleUpdate = (categoryId: string) => {
         console.log("Update category:", categoryId);
-
-        // Later:
         // router.push(`/dashboard/admin/categories/${categoryId}/edit`);
 };
 

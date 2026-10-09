@@ -28,7 +28,7 @@ export function ProductGallery({
             {/* Main Image */}
             <div className="relative h-[400px] overflow-hidden rounded-xl bg-muted sm:h-[400px] lg:h-[430px]">
                 <Image
-                    src={product.image}
+                    src={product?.image ?? "/placeholder-image.png"}
                     alt={product.name}
                     fill
                     priority
@@ -73,7 +73,7 @@ export function ProductGallery({
                             }`}
                         >
                             <Image
-                                src={item}
+                                src={item ?? "/placeholder-image.png"}
                                 alt={`${product.name} ${index + 1}`}
                                 fill
                                 unoptimized

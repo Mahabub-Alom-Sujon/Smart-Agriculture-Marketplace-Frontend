@@ -53,7 +53,7 @@ export default function CartItem({
                         className="relative h-32 w-full shrink-0 overflow-hidden rounded-lg bg-slate-100 sm:h-28 sm:w-28"
                     >
                         <Image
-                            src={product.image}
+                            src={product?.image ?? "/placeholder-image.png" }
                             alt={product.name}
                             fill
                             sizes="112px"

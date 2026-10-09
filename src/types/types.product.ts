@@ -2,8 +2,8 @@ export type ProductStatus = "ACTIVE" | "SOLD_OUT" | "INACTIVE";
 export interface Category {
     id: string;
     name: string;
-    description: string;
-    image: string;
+    description: string | null;
+    image: string | null;
     isDeleted: boolean;
     deletedAt: string | Date | null;
     createdAt: string | Date;
@@ -52,8 +52,8 @@ export interface Product {
     price: number;
     quantity: number;
     unit: string;
-    image: string;
-    status: "ACTIVE" | "INACTIVE" | "SOLD_OUT";
+    image: string | null;
+    status: ProductStatus,
     farmerId: string;
     categoryId: string;
     isDeleted: boolean;
@@ -64,6 +64,26 @@ export interface Product {
     farmer: Farmer;
     reviews: ProductReview[];
     _count: ProductCount;
+}
+
+/** Payload sent when creating a product */
+export interface CreateProductPayload {
+    name: string;
+    description?: string;
+    price: number;
+    quantity: number;
+    unit?: string;
+    image?: string;
+    status?: ProductStatus;
+    farmerId: string;
+    categoryId: string;
+}
+
+export interface ProductMeta {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
 }
 
 export interface ProductResponse {

@@ -39,7 +39,7 @@ export default function WishlistCard({
             <div className="relative h-52 overflow-hidden bg-slate-100">
                 <Link href={`/products/${product.id}`}>
                     <Image
-                        src={product.image}
+                        src={product?.image ?? "/placeholder-image.png" }
                         alt={product.name}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

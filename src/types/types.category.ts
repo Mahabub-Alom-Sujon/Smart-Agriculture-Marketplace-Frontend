@@ -19,6 +19,6 @@ export interface CategoryMeta {
 export interface CategoryResponse {
     success: boolean;
     message: string;
-    meta: CategoryMeta;
+    // meta: CategoryMeta;
     data: Category[];
 }
