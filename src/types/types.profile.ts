@@ -1,5 +1,5 @@
 export type AuthProvider = "CREDENTIAL" | "GOOGLE";
-export type UserRole = | "ADMIN" | "SUPER_ADMIN" | "FARMER" | "BUYER" | "EXPERT";
+export type UserRole = "ADMIN" | "SUPER_ADMIN" | "FARMER" | "BUYER" | "EXPERT";
 export type UserStatus = "ACTIVE" | "INACTIVE" | "BLOCKED";
 export interface BuyerProfile {
     id?: string;
@@ -8,13 +8,11 @@ export interface BuyerProfile {
     city?: string | null;
     country?: string | null;
 }
-
 export interface FarmerProfile {
     id?: string;
     name?: string;
     certification?: string | null;
 }
-
 export interface ExpertProfile {
     id?: string;
     name?: string;
@@ -23,7 +21,6 @@ export interface ExpertProfile {
     qualification?: string | null;
     experience?: number;
 }
-
 export interface UserProfile {
     id: string;
     name: string;
@@ -44,7 +41,7 @@ export interface UserProfile {
     updatedAt: string;
     buyer: BuyerProfile | null;
     farmer: FarmerProfile | null;
-    expert?: ExpertProfile | null;
+    expert: ExpertProfile | null;
 }
 
 export interface UpdateProfileInput {
@@ -54,13 +51,13 @@ export interface UpdateProfileInput {
     imageUrl?: string;
     imagePublicId?: string;
     // Buyer fields
-    city?: string;
-    country?: string;
+    city?: string | null;
+    country?: string | null;
     // Farmer fields
-    certification?: string;
+    certification?: string | null;
     // Expert fields
-    specialization?: string;
-    qualification?: string;
+    specialization?: string | null;
+    qualification?: string | null;
     experience?: number;
 }
 

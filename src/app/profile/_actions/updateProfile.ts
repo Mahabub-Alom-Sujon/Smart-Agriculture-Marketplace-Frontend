@@ -10,24 +10,31 @@ export async function updateProfile(
     try {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         if (!baseUrl) {
-            throw new Error(
-                "NEXT_PUBLIC_API_URL is not configured"
-            );
+            throw new Error("NEXT_PUBLIC_API_URL is not configured");
         }
         const cookieStore = await cookies();
+        const accessToken = cookieStore.get("accessToken")?.value;
+        if (!accessToken) {
+            return {
+                success: false,
+                message: "Unauthorized: Access token not found",
+            };
+        }
         const response = await fetch(
             `${baseUrl}/api/v1/user/update-profile`,
             {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
                     Cookie: cookieStore.toString(),
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(payload),
                 cache: "no-store",
             }
         );
         const result: unknown = await response.json();
+
         if (!response.ok) {
             const message =
                 typeof result === "object" &&
