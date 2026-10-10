@@ -1,7 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
 import type { UserProfileResponse } from "@/types/types.profile";
-
 export async function getProfile(): Promise<UserProfileResponse> {
     try {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL;
