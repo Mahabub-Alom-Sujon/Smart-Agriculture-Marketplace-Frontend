@@ -24,6 +24,13 @@ export interface Farmer {
     farms: Farm[];
 }
 
+export interface FarmerMeta {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
+}
+
 /**
  * GET /farmers
  */
