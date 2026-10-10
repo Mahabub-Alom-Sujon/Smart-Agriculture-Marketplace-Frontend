@@ -1,20 +1,24 @@
 "use client";
+
 import {
     ChevronLeft,
     ChevronRight,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-interface ExpertPaginationProps {
+
+interface OrderPaginationProps {
     currentPage: number;
     totalPages: number;
     searchTerm: string;
 }
-export default function ExpertPagination({
-    currentPage,
-    totalPages,
-    searchTerm,
-}: ExpertPaginationProps) {
+
+export default function OrderPagination({
+                                            currentPage,
+                                            totalPages,
+                                            searchTerm,
+                                        }: OrderPaginationProps) {
     const router = useRouter();
+
     const goToPage = (page: number) => {
         if (
             page < 1 ||
@@ -23,14 +27,19 @@ export default function ExpertPagination({
         ) {
             return;
         }
+
         const params = new URLSearchParams();
+
         if (searchTerm.trim()) {
             params.set("searchTerm", searchTerm.trim());
         }
+
         params.set("page", String(page));
+
         router.push(
-            `/dashboard/admin/experts?${params.toString()}`
+            `/dashboard/admin/orders?${params.toString()}`
         );
+
         window.scrollTo({
             top: 0,
             behavior: "smooth",
@@ -44,6 +53,7 @@ export default function ExpertPagination({
                 (_, index) => index + 1
             );
         }
+
         if (currentPage <= 3) {
             return [
                 1,
@@ -54,6 +64,7 @@ export default function ExpertPagination({
                 totalPages,
             ];
         }
+
         if (currentPage >= totalPages - 2) {
             return [
                 1,
@@ -64,6 +75,7 @@ export default function ExpertPagination({
                 totalPages,
             ];
         }
+
         return [
             1,
             "...",
@@ -74,10 +86,13 @@ export default function ExpertPagination({
             totalPages,
         ];
     };
+
     if (totalPages <= 1) {
         return null;
     }
+
     const pages = getPages();
+
     return (
         <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm sm:flex-row">
             <p className="text-sm text-slate-500">
@@ -93,12 +108,14 @@ export default function ExpertPagination({
 
             <nav
                 className="flex items-center gap-1.5"
-                aria-label="Experts pagination"
+                aria-label="Orders pagination"
             >
                 <button
                     type="button"
                     disabled={currentPage <= 1}
-                    onClick={() => goToPage(currentPage - 1)}
+                    onClick={() =>
+                        goToPage(currentPage - 1)
+                    }
                     className="inline-flex h-9 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-600 transition-colors hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                     <ChevronLeft className="h-4 w-4" />
@@ -113,7 +130,6 @@ export default function ExpertPagination({
                             <span
                                 key={`ellipsis-${index}`}
                                 className="flex h-9 w-9 items-center justify-center text-sm text-slate-400"
-                                aria-hidden="true"
                             >
                                 ...
                             </span>
@@ -131,10 +147,10 @@ export default function ExpertPagination({
                                 isActive ? "page" : undefined
                             }
                             className={`h-9 min-w-9 rounded-lg px-3 text-sm font-semibold transition-colors ${
-    isActive
-        ? "bg-green-600 text-white"
-        : "border border-slate-200 bg-white text-slate-600 hover:border-emerald-200 hover:bg-green-50 hover:text-green-700"
-}`}
+                                isActive
+                                    ? "bg-green-600 text-white"
+                                    : "border border-slate-200 bg-white text-slate-600 hover:border-emerald-200 hover:bg-green-50 hover:text-green-700"
+                            }`}
                         >
                             {page}
                         </button>
@@ -144,7 +160,9 @@ export default function ExpertPagination({
                 <button
                     type="button"
                     disabled={currentPage >= totalPages}
-                    onClick={() => goToPage(currentPage + 1)}
+                    onClick={() =>
+                        goToPage(currentPage + 1)
+                    }
                     className="inline-flex h-9 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-600 transition-colors hover:border-green-200 hover:bg-emerald-50 hover:text-green-700 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                     <span className="hidden sm:inline">

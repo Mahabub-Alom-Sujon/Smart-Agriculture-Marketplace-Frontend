@@ -178,11 +178,11 @@ const adminNavItems: NavItem[] = [
         label: "Orders",
         icon: <Package className="h-[18px] w-[18px]" />,
     },
-    {
-        href: "/dashboard/admin/analytics",
-        label: "Analytics",
-        icon: <BarChart3 className="h-[18px] w-[18px]" />,
-    },
+    // {
+    //     href: "/dashboard/admin/analytics",
+    //     label: "Analytics",
+    //     icon: <BarChart3 className="h-[18px] w-[18px]" />,
+    // },
     {
         href: "/profile",
         label: "Profile",

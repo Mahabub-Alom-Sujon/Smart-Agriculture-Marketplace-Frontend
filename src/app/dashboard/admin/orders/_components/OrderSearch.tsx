@@ -1,4 +1,5 @@
 "use client";
+
 import { Search } from "lucide-react";
 import {
     useRouter,
@@ -13,56 +14,61 @@ import type {
     FormEvent,
 } from "react";
 
-interface ExpertSearchProps {
+interface OrderSearchProps {
     initialSearchTerm: string;
 }
-export default function ExpertSearch({
-    initialSearchTerm,
-}: ExpertSearchProps) {
+
+export default function OrderSearch({
+                                        initialSearchTerm,
+                                    }: OrderSearchProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [searchTerm, setSearchTerm] = useState(
-        initialSearchTerm
-    );
+
+    const [searchTerm, setSearchTerm] =
+        useState(initialSearchTerm);
+
     useEffect(() => {
         setSearchTerm(initialSearchTerm);
     }, [initialSearchTerm]);
-    const handleSubmit = (
-        event: FormEvent<HTMLFormElement>
-    ) => {
-        event.preventDefault();
+
+    const updateSearchUrl = (value: string) => {
         const params = new URLSearchParams(
             searchParams.toString()
         );
-        const value = searchTerm.trim();
 
         if (value) {
             params.set("searchTerm", value);
         } else {
             params.delete("searchTerm");
         }
+
         params.set("page", "1");
+
         const query = params.toString();
+
         router.push(
-            query ? `/dashboard/admin/experts?${query}` : "/dashboard/admin/experts"
+            query
+                ? `/dashboard/admin/orders?${query}`
+                : "/dashboard/admin/orders"
         );
+    };
+
+    const handleSubmit = (
+        event: FormEvent<HTMLFormElement>
+    ) => {
+        event.preventDefault();
+        updateSearchUrl(searchTerm.trim());
     };
 
     const handleChange = (
         event: ChangeEvent<HTMLInputElement>
     ) => {
         const value = event.target.value;
+
         setSearchTerm(value);
+
         if (!value.trim()) {
-            const params = new URLSearchParams(
-                searchParams.toString()
-            );
-            params.delete("searchTerm");
-            params.set("page", "1");
-            const query = params.toString();
-            router.push(
-                query ? `/dashboard/admin/experts?${query}` : "/dashboard/admin/experts"
-            );
+            updateSearchUrl("");
         }
     };
 
@@ -87,8 +93,7 @@ export default function ExpertSearch({
                         type="search"
                         value={searchTerm}
                         onChange={handleChange}
-                        placeholder="Search experts..."
-                        aria-label="Search experts"
+                        placeholder="Search orders..."
                         className="
                             h-11 w-full rounded-lg
                             border border-slate-200
@@ -119,10 +124,6 @@ export default function ExpertSearch({
                         text-white
                         transition-colors
                         hover:bg-green-700
-                        focus-visible:outline-none
-                        focus-visible:ring-2
-                        focus-visible:ring-green-500
-                        focus-visible:ring-offset-2
                     "
                 >
                     <Search className="h-4 w-4" />
@@ -134,7 +135,7 @@ export default function ExpertSearch({
                 <p className="mt-3 text-xs text-slate-500">
                     Showing results for{" "}
                     <span className="font-semibold text-green-700">
-                        &quot;{initialSearchTerm}&quot;
+                        "{initialSearchTerm}"
                     </span>
                 </p>
             )}

@@ -1,17 +1,17 @@
 "use server";
 import { cookies } from "next/headers";
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-interface getAllExpertParams {
+interface getAllOrderParams {
     page?: number;
     limit?: number;
     searchTerm?: string;
 }
 
-export const getAllExpert = async ({
-       page = 1,
-       limit = 10,
-       searchTerm = "",
-}: getAllExpertParams = {}) => {
+export const getAllOrder = async ({
+   page = 1,
+   limit = 10,
+   searchTerm = "",
+}: getAllOrderParams = {}) => {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
     if (!accessToken) {
@@ -25,7 +25,7 @@ export const getAllExpert = async ({
         params.set("searchTerm", searchTerm.trim());
     }
     const res = await fetch(
-        `${API_URL}/api/v1/experts?${params.toString()}`,
+        `${API_URL}/api/v1/orders?${params.toString()}`,
         {
             method: "GET",
             headers: {
@@ -37,7 +37,7 @@ export const getAllExpert = async ({
     );
     const data = await res.json();
     if (!res.ok) {
-        throw new Error(data.message || "Failed to fetch farmer");
+        throw new Error(data.message || "Failed to fetch orders");
     }
     return data;
 };

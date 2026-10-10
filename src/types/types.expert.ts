@@ -12,6 +12,16 @@ export interface ExpertAdvice {
     updatedAt: string;
 }
 
+export interface ExpertUser {
+    id: string;
+    name: string;
+    email: string;
+    phone: string | null;
+    imageUrl: string | null;
+    role: string;
+    status: string;
+}
+
 export interface Expert {
     id: string;
     name: string;
@@ -25,6 +35,7 @@ export interface Expert {
     deletedAt: string | null;
     createdAt: string;
     updatedAt: string;
+    user: ExpertUser;
     expertAdvices: ExpertAdvice[];
 }
 
