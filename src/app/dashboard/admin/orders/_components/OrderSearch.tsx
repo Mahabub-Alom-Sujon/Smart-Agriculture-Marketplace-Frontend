@@ -1,5 +1,4 @@
 "use client";
-
 import { Search } from "lucide-react";
 import {
     useRouter,
@@ -19,37 +18,27 @@ interface OrderSearchProps {
 }
 
 export default function OrderSearch({
-                                        initialSearchTerm,
-                                    }: OrderSearchProps) {
+    initialSearchTerm,
+}: OrderSearchProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    const [searchTerm, setSearchTerm] =
-        useState(initialSearchTerm);
-
+    const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
     useEffect(() => {
         setSearchTerm(initialSearchTerm);
     }, [initialSearchTerm]);
-
     const updateSearchUrl = (value: string) => {
         const params = new URLSearchParams(
             searchParams.toString()
         );
-
         if (value) {
             params.set("searchTerm", value);
         } else {
             params.delete("searchTerm");
         }
-
         params.set("page", "1");
-
         const query = params.toString();
-
         router.push(
-            query
-                ? `/dashboard/admin/orders?${query}`
-                : "/dashboard/admin/orders"
+            query ? `/dashboard/admin/orders?${query}` : "/dashboard/admin/orders"
         );
     };
 
@@ -64,14 +53,11 @@ export default function OrderSearch({
         event: ChangeEvent<HTMLInputElement>
     ) => {
         const value = event.target.value;
-
         setSearchTerm(value);
-
         if (!value.trim()) {
             updateSearchUrl("");
         }
     };
-
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
             <form
