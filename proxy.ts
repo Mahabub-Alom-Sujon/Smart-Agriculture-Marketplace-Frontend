@@ -18,6 +18,7 @@ const PUBLIC_ROUTES = [
     "/products",
     "/terms",
     "/wishlist",
+    "/checkout",
     "/payment/success",
     "/payment/cancel",
 ]

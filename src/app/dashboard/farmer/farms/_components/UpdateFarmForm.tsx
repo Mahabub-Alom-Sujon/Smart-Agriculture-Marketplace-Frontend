@@ -25,17 +25,14 @@ import {
     type FarmFormValues,
 } from "@/schemas/farm.schema";
 import type { Farm } from "@/types/types.farm";
-
 interface UpdateFarmFormProps {
     farm: Farm;
 }
-
 export default function UpdateFarmForm({
-                                           farm,
-                                       }: UpdateFarmFormProps) {
+    farm,
+}: UpdateFarmFormProps) {
     const router = useRouter();
     const [submitting, setSubmitting] = useState(false);
-
     const {
         register,
         handleSubmit,
@@ -50,15 +47,10 @@ export default function UpdateFarmForm({
         },
     });
 
-    const inputClass =
-        "mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-gray-50";
-
-    const labelClass =
-        "flex items-center gap-2 text-sm font-semibold text-gray-800";
-
+    const inputClass = "mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-gray-50";
+    const labelClass = "flex items-center gap-2 text-sm font-semibold text-gray-800";
     const onSubmit = async (values: FarmFormValues) => {
         setSubmitting(true);
-
         try {
             const result = await updateFarm(farm.id, {
                 farmName: values.farmName.trim(),
@@ -66,12 +58,10 @@ export default function UpdateFarmForm({
                 landSize: Number(values.landSize),
                 soilType: values.soilType.trim(),
             });
-
             if (!result.success) {
                 toast.error(result.message || "Failed to update farm");
                 return;
             }
-
             toast.success(
                 result.message || "Farm updated successfully",
             );
@@ -86,7 +76,7 @@ export default function UpdateFarmForm({
     };
 
     return (
-        <div className="mx-auto w-full max-w-4xl space-y-6 pb-10">
+        <div className="mx-auto w-full max-w-3xl space-y-6 pb-10">
             {/* Header */}
             <div className="flex items-center gap-3">
                 <Link
@@ -313,32 +303,7 @@ export default function UpdateFarmForm({
                             </p>
                         )}
                     </div>
-
-                    {/* Current farm status */}
-                    <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 p-4">
-                        <p className="text-sm font-medium text-gray-700">
-                            Farm Record
-                        </p>
-
-                        <p className="mt-1 text-xs leading-5 text-gray-500">
-                            Created on{" "}
-                            {new Date(farm.createdAt).toLocaleDateString(
-                                "en-GB",
-                                {
-                                    day: "numeric",
-                                    month: "short",
-                                    year: "numeric",
-                                },
-                            )}
-                        </p>
-
-                        <p className="mt-1 text-xs leading-5 text-gray-500">
-                            Updating this form changes the farm information,
-                            not its ownership.
-                        </p>
-                    </div>
                 </div>
-
                 {/* Buttons */}
                 <div className="mt-8 flex flex-col-reverse gap-3 border-t border-gray-100 pt-6 sm:flex-row sm:justify-end">
                     <Link
