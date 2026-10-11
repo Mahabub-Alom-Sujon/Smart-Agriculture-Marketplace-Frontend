@@ -71,8 +71,8 @@ const farmerNavItems: NavItem[] = [
         icon: <LayoutDashboard className="h-[18px] w-[18px]" />,
     },
     {
-        href: "/dashboard/farmer/farm",
-        label: "My Farm",
+        href: "/dashboard/farmer/farms",
+        label: "My Farms",
         icon: <Tractor className="h-[18px] w-[18px]" />,
     },
     {

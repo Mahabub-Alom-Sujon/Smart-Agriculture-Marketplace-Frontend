@@ -80,25 +80,6 @@ export default function CreateConsultationForm() {
                     </p>
                 </div>
             </div>
-            {/*/!* Intro card *!/*/}
-            {/*<div className="overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-700 to-teal-600 p-6 text-white sm:p-8">*/}
-            {/*    <div className="flex items-start gap-4">*/}
-            {/*        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/15">*/}
-            {/*            <Sprout size={27} />*/}
-            {/*        </div>*/}
-            {/*        <div>*/}
-            {/*            <h2 className="text-lg font-semibold">*/}
-            {/*                Get help for healthier crops*/}
-            {/*            </h2>*/}
-            {/*            <p className="mt-2 max-w-2xl text-sm leading-6 text-emerald-50">*/}
-            {/*                Share the symptoms, affected plants, and any*/}
-            {/*                changes you have noticed. Clear details help*/}
-            {/*                experts understand your problem.*/}
-            {/*            </p>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/* Form */}
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
