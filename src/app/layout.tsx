@@ -16,8 +16,43 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 export const metadata: Metadata = {
-  title: "AgroNexa",
-  description: "Smart Agriculture Marketplace",
+  metadataBase: new URL("https://smart-agriculture-marketplace-nine.vercel.app"),
+  title: {
+    default: "AgroMart | Smart Agriculture Marketplace",
+    template: "%s | AgroMart",
+  },
+  description: "Buy fresh agricultural products, connect with farmers, discover farming experts, and grow your agricultural business with AgroMart.",
+  applicationName: "AgroMart",
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "AgroMart",
+    title: "AgroMart | Smart Agriculture Marketplace",
+    description:
+        "Connect farmers, buyers, and agricultural experts in one marketplace.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AgroMart Smart Agriculture Marketplace",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "AgroMart | Smart Agriculture Marketplace",
+    description:
+        "Discover agricultural products, farmers, and farming experts.",
+    images: ["/og-image.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 export default function RootLayout({ children }: Readonly<{
   children: React.ReactNode;

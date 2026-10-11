@@ -1,9 +1,15 @@
 import React from 'react';
+import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 import TermsHero from "@/app/(public)/terms/_components/TermsHero";
 import TermsOverview from "@/app/(public)/terms/_components/TermsOverview";
 import TermsSidebar from "@/app/(public)/terms/_components/TermsSidebar";
 import TermsContent from "@/app/(public)/terms/_components/TermsContent";
-
+export const metadata: Metadata = createPageMetadata({
+    title: "Terms and Conditions",
+    description: "Review the terms and conditions governing the use of the AgroMart marketplace.",
+    path: "/terms",
+});
 const Page = () => {
     return (
         <>

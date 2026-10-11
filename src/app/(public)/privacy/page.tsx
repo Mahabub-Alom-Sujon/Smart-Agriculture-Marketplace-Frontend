@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 import React from 'react';
 import PrivacyHero from "@/app/(public)/privacy/_components/PrivacyHero";
 import PrivacyOverview from "@/app/(public)/privacy/_components/PrivacyOverview";
 import PrivacySidebar from "@/app/(public)/privacy/_components/PrivacySidebar";
 import PrivacyContent from "@/app/(public)/privacy/_components/PrivacyContent";
-
+export const metadata: Metadata = createPageMetadata({
+    title: "Privacy Policy",
+    description: "Read the AgroMart privacy policy to understand how personal information is handled and protected.",
+    path: "/privacy",
+});
 const Page = () => {
     return (
         <>

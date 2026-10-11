@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 import React, { Suspense } from "react";
 import ProductList from "@/app/(public)/products/_components/product-list";
 import Pagination from "@/app/(public)/products/_components/Pagination";
@@ -9,6 +11,11 @@ interface PageProps {
         [key: string]: string | string[] | undefined;
     }>;
 }
+export const metadata: Metadata = createPageMetadata({
+    title: "Agricultural Products",
+    description: "Explore agricultural products, compare offerings, and shop for fresh farm produce on AgroMart.",
+    path: "/products",
+});
 const Page = async ({ searchParams }: PageProps) => {
     const params = await searchParams;
     return (

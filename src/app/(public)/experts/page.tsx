@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 import { getAllExperts } from "./_actions/expertAction";
 import ExpertsPage from "./_components/ExpertsPage";
-export const metadata: Metadata = {
-    title: "Agricultural Experts | AgroMart",
-    description: "Find experienced agricultural experts for professional farming, soil and crop management advice.",
-};
+export const metadata: Metadata = createPageMetadata({
+    title: "Agricultural Experts",
+    description: "Find agricultural experts for crop management, soil health, and farming consultation.",
+    path: "/experts",
+});
 export const revalidate = 300;
 interface ExpertsRouteProps {
     searchParams: Promise<{

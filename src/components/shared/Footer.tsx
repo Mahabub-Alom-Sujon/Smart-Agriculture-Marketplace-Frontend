@@ -25,7 +25,7 @@ const Footer = () => {
                             title="Marketplace"
                             links={[
                                 ["Products", "/products"],
-                                ["Categories", "/categories"],
+                                // ["Categories", "/categories"],
                                 ["Farmers", "/farmers"],
                                 ["Experts", "/experts"],
                             ]}
