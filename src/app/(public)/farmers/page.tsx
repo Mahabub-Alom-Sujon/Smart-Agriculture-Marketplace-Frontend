@@ -6,20 +6,22 @@ import FarmersPage from "@/app/(public)/farmers/_components/FarmersPage";
 import { getAllFarmers } from "@/app/(public)/farmers/_actions/farmerAction";
 export const metadata: Metadata = createPageMetadata({
     title: "Our Farmers",
-    description: "Discover farmers, explore their agricultural products, and connect with local producers on AgroMart.",
+    description:
+        "Discover farmers, explore their agricultural products, and connect with local producers on AgroMart.",
     path: "/farmers",
 });
+
 export default async function Farmers() {
     const response = await getAllFarmers();
     const farmers = response.data;
     const totalFarms = farmers.reduce(
-        (total, farmer) => total + farmer.farms.length,
+        (total, farmer) => total + (farmer.farms?.length ?? 0),
         0
     );
     const totalLand = farmers.reduce(
         (total, farmer) =>
             total +
-            farmer.farms.reduce(
+            (farmer.farms ?? []).reduce(
                 (farmTotal, farm) => farmTotal + farm.landSize,
                 0
             ),

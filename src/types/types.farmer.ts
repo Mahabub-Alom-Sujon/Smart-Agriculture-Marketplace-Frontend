@@ -21,7 +21,7 @@ export interface Farmer {
     deletedAt: string | null;
     createdAt: string;
     updatedAt: string;
-    farms: Farm[];
+    farms?: Farm[];
 }
 
 export interface FarmerMeta {

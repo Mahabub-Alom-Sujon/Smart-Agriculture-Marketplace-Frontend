@@ -1,6 +1,4 @@
-
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,7 +15,6 @@ import {
     Trees,
 } from "lucide-react";
 import { toast } from "sonner";
-
 import { updateFarm } from "../_actions/updateFarm";
 import {
     farmSchema,

@@ -7,27 +7,22 @@ import {
     MapPin,
     Sprout,
 } from "lucide-react";
+
 import type { Farmer } from "@/types/types.farmer";
+import moment from "moment/moment";
 interface FarmerCardProps {
     farmer: Farmer;
 }
-export default function FarmerCard({
-    farmer,
-}: FarmerCardProps) {
-    const totalLand = farmer.farms.reduce(
+export default function FarmerCard({ farmer }: FarmerCardProps) {
+    const farms = farmer.farms ?? [];
+    const totalLand = farms.reduce(
         (total, farm) => total + farm.landSize,
         0
     );
     const locations = Array.from(
-        new Set( farmer.farms.map((farm) => farm.location))
+        new Set(farms.map((farm) => farm.location))
     );
     const initial = farmer.name.trim().charAt(0).toUpperCase();
-    const joinedDate = new Date(
-        farmer.createdAt
-    ).toLocaleDateString("en-US", {
-        month: "short",
-        year: "numeric",
-    });
     return (
         <article className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl hover:shadow-green-900/5">
             {/* Top Accent */}
@@ -39,15 +34,18 @@ export default function FarmerCard({
                     <div className="flex min-w-0 items-center gap-3">
                         <div className="relative shrink-0">
                             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 text-xl font-bold text-green-700 ring-4 ring-green-50">
-                                {initial}
+                                {initial || "F"}
                             </div>
+
                             {/* Active indicator */}
                             <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500" />
                         </div>
+
                         <div className="min-w-0">
                             <h3 className="truncate text-lg font-bold text-slate-900 transition-colors group-hover:text-green-700">
                                 {farmer.name}
                             </h3>
+
                             <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs text-slate-500">
                                 <Mail className="h-3.5 w-3.5 shrink-0 text-slate-400" />
                                 <span className="truncate">
@@ -56,6 +54,7 @@ export default function FarmerCard({
                             </div>
                         </div>
                     </div>
+
                     {/* Certification / Arrow */}
                     {farmer.certification ? (
                         <div className="flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1.5 text-[10px] font-semibold text-amber-700">
@@ -79,7 +78,9 @@ export default function FarmerCard({
                         Location
                     </p>
                     <p className="mt-0.5 truncate text-sm font-medium text-slate-700">
-                        {locations.length > 0 ? locations.join(" • ") : "Location not available"}
+                        {locations.length > 0
+                            ? locations.join(" • ")
+                            : "Location not available"}
                     </p>
                 </div>
             </div>
@@ -93,7 +94,7 @@ export default function FarmerCard({
                         </span>
                     </div>
                     <p className="mt-1.5 text-xl font-bold text-slate-900">
-                        {farmer.farms.length}
+                        {farms.length}
                     </p>
                 </div>
                 <div className="px-4 py-3.5">
@@ -103,6 +104,7 @@ export default function FarmerCard({
                             Total Land
                         </span>
                     </div>
+
                     <p className="mt-1.5 text-xl font-bold text-slate-900">
                         {totalLand.toFixed(2)}
                         <span className="ml-1 text-xs font-medium text-slate-400">
@@ -113,24 +115,23 @@ export default function FarmerCard({
             </div>
             {/* Farm tags */}
             <div className="mx-5 mt-4">
-                {farmer.farms.length > 0 ? (
+                {farms.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5">
-                        {farmer.farms
-                            .slice(0, 2)
-                            .map((farm) => (
-                                <span
-                                    key={farm.id}
-                                    className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2.5 py-1.5 text-[11px] font-medium text-green-700"
-                                >
-                                    <Sprout className="h-3 w-3 shrink-0" />
-                                    <span className="truncate">
-                                        {farm.farmName}
-                                    </span>
+                        {farms.slice(0, 2).map((farm) => (
+                            <span
+                                key={farm.id}
+                                className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2.5 py-1.5 text-[11px] font-medium text-green-700"
+                            >
+                                <Sprout className="h-3 w-3 shrink-0" />
+                                <span className="truncate">
+                                    {farm.farmName}
                                 </span>
-                            ))}
-                        {farmer.farms.length > 2 && (
+                            </span>
+                        ))}
+
+                        {farms.length > 2 && (
                             <span className="inline-flex items-center rounded-md border border-slate-100 bg-slate-50 px-2.5 py-1.5 text-[11px] font-medium text-slate-500">
-                                +{farmer.farms.length - 2}
+                                +{farms.length - 2}
                             </span>
                         )}
                     </div>
@@ -144,8 +145,9 @@ export default function FarmerCard({
             <div className="mx-5 mt-5 flex items-center justify-between border-t border-slate-100 py-4">
                 <div className="flex items-center gap-1.5 text-xs text-slate-400">
                     <CalendarDays className="h-3.5 w-3.5" />
-                    Joined {joinedDate}
+                    Joined {moment(farmer.createdAt).format("MMM Do YY")}
                 </div>
+
                 <div className="flex items-center gap-1.5 text-xs font-medium text-green-600">
                     <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                     Active

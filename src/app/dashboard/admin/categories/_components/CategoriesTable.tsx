@@ -8,7 +8,7 @@ import {
     Pencil,
     Trash2,
 } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import moment from 'moment'
 import type { Category } from "@/types/types.category";
 import {DeleteAlert} from "@/lib/DeleteAlert";
@@ -22,20 +22,16 @@ interface CategoriesTableProps {
 export default function CategoriesTable({
     categories,
 }: CategoriesTableProps) {
-    const [openActionId, setOpenActionId] = useState<string | null>(
-        null
-    );
-
-    const handleView = (categoryId: string) => {
-        console.log("View category:", categoryId);
+    const router = useRouter();
+    const [openActionId, setOpenActionId] = useState<string | null>(null);
+    const handleView = (id: string) => {
+        console.log("View category:", id);
         // router.push(`/dashboard/admin/categories/${categoryId}`);
     };
-
-    const handleUpdate = (categoryId: string) => {
-        console.log("Update category:", categoryId);
-        // router.push(`/dashboard/admin/categories/${categoryId}/edit`);
-};
-
+    const handleUpdate = (id: string) => {
+        console.log("Update category:", id);
+        router.push(`/dashboard/admin/categories/${id}/edit`);
+    };
     const handleDelete = async (id: string) => {
         const alertResult = await DeleteAlert();
         if (!alertResult.isConfirmed) {
@@ -58,7 +54,6 @@ return (
                     <h2 className="font-semibold text-slate-900">
                         Category List
                     </h2>
-
                     <p className="mt-1 text-xs text-slate-500">
                         All product categories
                     </p>
@@ -152,19 +147,16 @@ return (
 
                             {/* Status */}
                             <td className="px-5 py-4">
-                                        <span
-                                            className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-                                                category.isDeleted
-                                                    ? "bg-red-50 text-red-600"
-                                                    : "bg-emerald-50 text-green-700"
-                                            }`}
-                                        >
-                                            {category.isDeleted
-                                                ? "Deleted"
-                                                : "Active"}
-                                        </span>
+                                <span
+                                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+                                        category.isDeleted
+                                            ? "bg-red-50 text-red-600"
+                                            : "bg-emerald-50 text-green-700"
+                                    }`}
+                                >
+                                    {category.isDeleted ? "Deleted" : "Active"}
+                                </span>
                             </td>
-
                             {/* Created */}
                             <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-500">
                                 {moment(category.createdAt).format('MMM Do YY')}

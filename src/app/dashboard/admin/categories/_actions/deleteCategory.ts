@@ -6,7 +6,6 @@ interface DeleteCategoryResponse {
     success: boolean;
     message: string;
 }
-
 export const deleteCategory = async (
     id: string
 ): Promise<DeleteCategoryResponse> => {
@@ -17,7 +16,6 @@ export const deleteCategory = async (
                 message: "Category ID is required",
             };
         }
-
         if (!BASE_URL) {
             return {
                 success: false,
@@ -32,7 +30,6 @@ export const deleteCategory = async (
                 message: "Unauthorized. Please login again.",
             };
         }
-
         const response = await fetch(`${BASE_URL}/api/v1/categories/${id}`,
             {
                 method: "DELETE",
@@ -43,9 +40,7 @@ export const deleteCategory = async (
                 cache: "no-store",
             }
         );
-
-        const result =
-            (await response.json()) as DeleteCategoryResponse;
+        const result = (await response.json()) as DeleteCategoryResponse;
         if (!response.ok) {
             return {
                 success: false,

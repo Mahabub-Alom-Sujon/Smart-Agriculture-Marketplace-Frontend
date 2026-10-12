@@ -7,6 +7,7 @@ import {
     MapPin,
     Sprout,
 } from "lucide-react";
+import moment from 'moment'
 import type { Farmer } from "@/types/types.farmer";
 interface FarmerProfileHeaderProps {
     farmer: Farmer;
@@ -14,21 +15,10 @@ interface FarmerProfileHeaderProps {
 export default function FarmerProfileHeader({
     farmer,
 }: FarmerProfileHeaderProps) {
-    const initial = farmer.name
-        .trim()
-        .charAt(0)
-        .toUpperCase();
-
-    const joinedDate = new Date(
-        farmer.createdAt
-    ).toLocaleDateString("en-US", {
-        month: "long",
-        year: "numeric",
-    });
+    const farms = farmer.farms ?? [];
+    const initial = farmer.name.trim().charAt(0).toUpperCase();
     const locations = Array.from(
-        new Set(
-            farmer.farms.map((farm) => farm.location)
-        )
+        new Set(farms.map((farm) => farm.location))
     );
     return (
         <section className="relative overflow-hidden border-b border-green-900/10 text-white">
@@ -99,7 +89,7 @@ export default function FarmerProfileHeader({
                                 {/* Joined Date */}
                                 <span className="inline-flex items-center gap-2">
                                     <CalendarDays className="h-4 w-4 text-green-300" />
-                                    Joined {joinedDate}
+                                    Joined {moment(farmer.createdAt).format("MMM Do YY")}
                                 </span>
                             </div>
                         </div>

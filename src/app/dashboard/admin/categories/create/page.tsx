@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Plus } from "lucide-react";
-import CreateCategoryForm from "@/app/dashboard/admin/categories/create/_components/CreateCategoryForm";
+import CreateCategoryForm from "@/app/dashboard/admin/categories/_components/CreateCategoryForm";
 const Page = () => {
     return (
         <main className="min-h-screen bg-slate-50">

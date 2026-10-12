@@ -15,21 +15,7 @@ import moment from "moment";
 import { toast } from "sonner";
 import { DeleteAlert } from "@/lib/DeleteAlert";
 import { deleteFarmer } from "@/app/dashboard/admin/farmers/_actions/deleteFarmer";
-export interface Farmer {
-    id: string;
-    name: string;
-    email: string;
-    certification: string | null;
-    userId: string;
-    isDeleted: boolean;
-    deletedAt: string | null;
-    createdAt: string;
-    updatedAt: string;
-    farms: {
-        id?: string;
-        name?: string;
-    }[];
-}
+import { Farmer } from "@/types/types.farmer"
 interface FarmerTableProps {
     farmers: Farmer[];
 }
@@ -37,18 +23,12 @@ export default function FarmerTable({
     farmers,
 }: FarmerTableProps) {
     const router = useRouter();
-    const [openActionId, setOpenActionId] = useState<
-        string | null
-    >(null);
+    const [openActionId, setOpenActionId] = useState<string | null>(null);
     const handleView = (farmerId: string) => {
-        router.push(
-            `/dashboard/admin/farmers/${farmerId}`
-        );
+        router.push(`/dashboard/admin/farmers/${farmerId}`);
     };
     const handleUpdate = (farmerId: string) => {
-        router.push(
-            `/dashboard/admin/farmers/${farmerId}/edit`
-        );
+        router.push(`/dashboard/admin/farmers/${farmerId}/edit`);
     };
     const handleDelete = async (id: string) => {
         try {
@@ -166,8 +146,8 @@ export default function FarmerTable({
                                 <td className="px-5 py-4">
                                         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-green-600">
                                             <Tractor className="h-3.5 w-3.5" />
-                                            {farmer.farms.length}{" "}
-                                            {farmer.farms.length === 1 ? "Farm" : "Farms"}
+                                            {(farmer.farms?.length ?? 0)}{" "}
+                                            {(farmer.farms?.length ?? 0) === 1 ? "Farm" : "Farms"}
                                         </span>
                                 </td>
 

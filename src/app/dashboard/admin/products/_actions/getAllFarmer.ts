@@ -1,8 +1,8 @@
 "use server";
 import { cookies } from "next/headers";
-import type { CategoryResponse } from "@/types/types.category";
+import type { FarmerResponse } from "@/types/types.farmer";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-export const getAllFarmers = async (): Promise<CategoryResponse> => {
+export const getAllFarmers = async (): Promise<FarmerResponse> => {
     if (!API_URL) {
         throw new Error("NEXT_PUBLIC_API_URL is not configured");
     }
@@ -16,7 +16,7 @@ export const getAllFarmers = async (): Promise<CategoryResponse> => {
         },
         cache: "no-store"
     });
-    const result: CategoryResponse = await response.json();
+    const result: FarmerResponse = await response.json();
     if (!response.ok) {
         throw new Error(
             result.message || "Failed to fetch categories"

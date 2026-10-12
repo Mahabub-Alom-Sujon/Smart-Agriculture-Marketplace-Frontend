@@ -16,9 +16,30 @@ export interface CategoryMeta {
     totalPage: number;
 }
 
+// Create category payload
+export interface CreateCategoryInput {
+    name: string;
+    description?: string;
+    image?: string;
+}
+
+// Update category payload
+export interface UpdateCategoryInput {
+    name?: string;
+    description?: string | null;
+    image?: string | null;
+}
+
+// API response
 export interface CategoryResponse {
     success: boolean;
     message: string;
-    // meta: CategoryMeta;
     data: Category[];
+}
+
+// Single category response
+export interface SingleCategoryResponse {
+    success: boolean;
+    message: string;
+    data?: Category;
 }

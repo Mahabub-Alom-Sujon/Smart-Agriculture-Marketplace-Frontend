@@ -9,19 +9,20 @@ interface FarmerDetailsProps {
 export default function FarmerDetails({
     farmer,
 }: FarmerDetailsProps) {
-    const totalLand = farmer.farms.reduce(
+    const farms = farmer.farms ?? [];
+    const totalLand = farms.reduce(
         (total, farm) => total + farm.landSize,
         0
     );
     const locations = Array.from(
-        new Set( farmer.farms.map((farm) => farm.location))
+        new Set(farms.map((farm) => farm.location))
     );
     return (
         <>
             <FarmerProfileHeader farmer={farmer} />
             <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                 <FarmerStats
-                    farmCount={farmer.farms.length}
+                    farmCount={farms.length}
                     totalLand={totalLand}
                     locationCount={locations.length}
                 />
@@ -42,13 +43,13 @@ export default function FarmerDetails({
                             </p>
                         </div>
                         <div className="text-sm text-slate-400">
-                            {farmer.farms.length}{" "}
-                            {farmer.farms.length === 1 ? "Farm" : "Farms"}
+                            {farms.length}{" "}
+                            {farms.length === 1 ? "Farm" : "Farms"}
                         </div>
                     </div>
-                    {farmer.farms.length > 0 ? (
+                    {farms.length > 0 ? (
                         <div className="grid gap-5 md:grid-cols-2">
-                            {farmer.farms.map((farm) => (
+                            {farms.map((farm) => (
                                 <FarmerFarmCard
                                     key={farm.id}
                                     farm={farm}
