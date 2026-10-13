@@ -1,6 +1,6 @@
 import { getAllCategory } from "@/app/dashboard/admin/products/_actions/getAllCategory";
 import { getAllFarmers } from "@/app/dashboard/admin/products/_actions/getAllFarmer";
-import CreateProductForm from "@/app/dashboard/admin/products/create/_components/CreateProductForm";
+import CreateProductForm from "@/app/dashboard/admin/products/_components/CreateProductForm";
 const Page = async () => {
     const [categoryResponse, farmerResponse] = await Promise.all([
         getAllCategory(),

@@ -78,6 +78,19 @@ export interface CreateProductPayload {
     farmerId: string;
     categoryId: string;
 }
+/** Payload sent when updating a product */
+export interface UpdateProductPayload {
+    name?: string;
+    description?: string;
+    price?: number;
+    quantity?: number;
+    unit?: string;
+    image?: string;
+    status?: ProductStatus;
+    farmerId?: string;
+    categoryId?: string;
+}
+
 
 export interface ProductMeta {
     page: number;
@@ -86,8 +99,8 @@ export interface ProductMeta {
     totalPage: number;
 }
 
-export interface ProductResponse {
+export interface SingleProductResponse {
     success: boolean;
     message: string;
-    data: Product;
+    data?: Product;
 }

@@ -15,6 +15,7 @@ import {
 import moment from "moment";
 import type { Product } from "@/types/types.product";
 import {DeleteAlert} from "@/lib/DeleteAlert";
+import { useRouter } from "next/navigation";
 import { deleteProduct } from "@/app/dashboard/admin/products/_actions/deleteProduct";
 import { toast } from "sonner";
 
@@ -38,6 +39,7 @@ const statusStyles: Record<Product["status"], string> = {
 export default function ProductTable({
      products,
 }: ProductTableProps) {
+    const router = useRouter();
     const [openActionId, setOpenActionId] = useState<string | null>(null);
     const handleView = (id: string) => {
         console.log("View category:", id);
@@ -45,8 +47,8 @@ export default function ProductTable({
     };
 
     const handleUpdate = (id: string) => {
-        console.log("Update category:", id);
-        // router.push(`/dashboard/admin/categories/${categoryId}/edit`);
+        // console.log("Update Product:", id);
+        router.push(`/dashboard/admin/products/${id}/edit`);
     };
 
     const handleDelete = async (id: string) => {

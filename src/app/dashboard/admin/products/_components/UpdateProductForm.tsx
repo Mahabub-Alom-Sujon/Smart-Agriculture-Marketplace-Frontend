@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -14,7 +15,9 @@ import {
     type ProductFormValues,
     type ProductValidatedValues,
 } from "@/schemas/product.schema";
-import { createProduct } from "@/app/dashboard/admin/products/_actions/createProduct";
+import { updateProduct } from "@/app/dashboard/admin/products/_actions/updateProduct";
+import type { Product } from "@/types/types.product";
+import { useRouter } from "next/navigation";
 interface CategoryOption {
     id: string;
     name: string;
@@ -23,14 +26,17 @@ interface FarmerOption {
     id: string;
     name: string;
 }
-interface CreateProductFormProps {
+interface UpdateProductFormProps {
+    product: Product;
     categories: CategoryOption[];
     farmers: FarmerOption[];
 }
-const CreateProductForm = ({
-   categories,
-   farmers,
-}: CreateProductFormProps) => {
+const UpdateProductForm = ({
+    product,
+    categories,
+    farmers,
+}: UpdateProductFormProps) => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -43,64 +49,100 @@ const CreateProductForm = ({
     >({
         resolver: zodResolver(productSchema),
         defaultValues: {
-            name: "",
-            description: "",
-            price: 0,
-            quantity: 1,
-            unit: "KG",
-            image: "",
-            status: "ACTIVE",
-            categoryId: "",
-            farmerId: "",
+            name: product.name,
+            description: product.description ?? "",
+            price: product.price,
+            quantity: product.quantity,
+            unit: product.unit,
+            image: product.image ?? "",
+            status: product.status,
+            categoryId: product.categoryId,
+            farmerId: product.farmerId,
         },
     });
-    const onSubmit = async (data: ProductValidatedValues) => {
-        const result = await createProduct({
-            name: data.name,
-            description: data.description || undefined,
-            price: data.price,
-            quantity: data.quantity,
-            unit: data.unit,
-            image: data.image || undefined,
-            status: data.status,
-            categoryId: data.categoryId,
-            farmerId: data.farmerId,
+
+    // Reset the form when the selected product changes.
+    useEffect(() => {
+        reset({
+            name: product.name,
+            description: product.description ?? "",
+            price: product.price,
+            quantity: product.quantity,
+            unit: product.unit,
+            image: product.image ?? "",
+            status: product.status,
+            categoryId: product.categoryId,
+            farmerId: product.farmerId,
         });
-        toast.success(result?.message || "Product created successfully!"
-        );
-        reset();
+    }, [product, reset]);
+
+    const onSubmit = async (data: ProductValidatedValues) => {
+        try {
+            const result = await updateProduct(product.id, {
+                name: data.name,
+                description: data.description || undefined,
+                price: data.price,
+                quantity: data.quantity,
+                unit: data.unit,
+                image: data.image || undefined,
+                status: data.status,
+                categoryId: data.categoryId,
+                farmerId: data.farmerId,
+            });
+
+            if (!result?.success) {
+                toast.error(
+                    result?.message || "Failed to update product."
+                );
+                return;
+            }
+            toast.success(
+                result.message || "Product updated successfully!"
+            );
+            router.push("/dashboard/admin/products");
+            router.refresh();
+        } catch (error: unknown) {
+            const message =
+                error instanceof Error ? error.message : "Something went wrong while updating the product.";
+
+            toast.error(message);
+        }
     };
+
     const inputClass = (hasError: boolean) =>
         `h-12 w-full rounded-lg border bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:ring-4 ${
-            hasError ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
-                : "border-slate-200 focus:border-emerald-500 focus:ring-green-500/10"
-        }`;
+    hasError
+        ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
+        : "border-slate-200 focus:border-emerald-500 focus:ring-green-500/10"
+}`;
+
     const labelClass = "block text-sm font-medium text-slate-700";
+
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-8"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Basic Information */}
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-green-600">
                         <Package className="h-5 w-5" />
                     </div>
+
                     <div>
                         <h2 className="text-lg font-semibold text-slate-900">
                             Basic Information
                         </h2>
                         <p className="text-sm text-slate-500">
-                            Enter your product details.
+                            Update your product details.
                         </p>
                     </div>
                 </div>
+
                 {/* Product Name */}
                 <div className="space-y-2">
                     <label htmlFor="name" className={labelClass}>
                         Product Name <span className="text-red-500">*</span>
                     </label>
+
                     <input
                         id="name"
                         type="text"
@@ -108,6 +150,7 @@ const CreateProductForm = ({
                         {...register("name")}
                         className={inputClass(!!errors.name)}
                     />
+
                     {errors.name && (
                         <p className="text-xs font-medium text-red-500">
                             {errors.name.message}
@@ -117,10 +160,7 @@ const CreateProductForm = ({
 
                 {/* Description */}
                 <div className="space-y-2">
-                    <label
-                        htmlFor="description"
-                        className={labelClass}
-                    >
+                    <label htmlFor="description" className={labelClass}>
                         Description
                     </label>
 
@@ -130,10 +170,10 @@ const CreateProductForm = ({
                         placeholder="Describe the product, its quality, and freshness..."
                         {...register("description")}
                         className={`w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:ring-4 ${
-                            errors.description
-                                ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
-                                : "border-slate-200 focus:border-green-500 focus:ring-green-500/10"
-                        }`}
+    errors.description
+        ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
+        : "border-slate-200 focus:border-green-500 focus:ring-green-500/10"
+}`}
                     />
 
                     {errors.description && (
@@ -144,14 +184,14 @@ const CreateProductForm = ({
                 </div>
             </section>
 
-            {/* Price and Quantity */}
+            {/* Pricing and Inventory */}
             <section className="space-y-6">
                 <div>
                     <h2 className="text-lg font-semibold text-slate-900">
                         Pricing & Inventory
                     </h2>
                     <p className="mt-1 text-sm text-slate-500">
-                        Set the product price and available quantity.
+                        Update the price and available quantity.
                     </p>
                 </div>
 
@@ -257,14 +297,11 @@ const CreateProductForm = ({
             </section>
 
             {/* Category and Farmer */}
-            <section className="space-y-6 mt-3">
+            <section className="mt-3 space-y-6">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     {/* Category */}
                     <div className="space-y-2">
-                        <label
-                            htmlFor="categoryId"
-                            className={labelClass}
-                        >
+                        <label htmlFor="categoryId" className={labelClass}>
                             Category <span className="text-red-500">*</span>
                         </label>
 
@@ -293,7 +330,7 @@ const CreateProductForm = ({
 
                         {categories.length === 0 && (
                             <p className="text-xs text-amber-600">
-                                No categories available. Create a category first.
+                                No categories available.
                             </p>
                         )}
                     </div>
@@ -312,10 +349,7 @@ const CreateProductForm = ({
                             <option value="">Select farmer</option>
 
                             {farmers.map((farmer) => (
-                                <option
-                                    key={farmer.id}
-                                    value={farmer.id}
-                                >
+                                <option key={farmer.id} value={farmer.id}>
                                     {farmer.name}
                                 </option>
                             ))}
@@ -336,31 +370,25 @@ const CreateProductForm = ({
                 </div>
             </section>
 
-            {/* Image */}
-            <section className="space-y-6">
-                <div className="space-y-2 mt-2">
-                    <label htmlFor="image" className={labelClass}>
-                        Image URL
-                    </label>
+            {/* Image URL */}
+            <section className="space-y-2">
+                <label htmlFor="image" className={labelClass}>
+                    Image URL
+                </label>
 
-                    <input
-                        id="image"
-                        type="url"
-                        placeholder="https://example.com/product.jpg"
-                        {...register("image")}
-                        className={inputClass(!!errors.image)}
-                    />
+                <input
+                    id="image"
+                    type="url"
+                    placeholder="https://example.com/product.jpg"
+                    {...register("image")}
+                    className={inputClass(!!errors.image)}
+                />
 
-                    {errors.image && (
-                        <p className="text-xs font-medium text-red-500">
-                            {errors.image.message}
-                        </p>
-                    )}
-
-                    <p className="text-xs text-slate-400">
-                        Use a valid, publicly accessible image URL.
+                {errors.image && (
+                    <p className="text-xs font-medium text-red-500">
+                        {errors.image.message}
                     </p>
-                </div>
+                )}
             </section>
 
             {/* Actions */}
@@ -377,7 +405,19 @@ const CreateProductForm = ({
                     <button
                         type="button"
                         disabled={isSubmitting}
-                        onClick={() => reset()}
+                        onClick={() =>
+                            reset({
+                                name: product.name,
+                                description: product.description ?? "",
+                                price: product.price,
+                                quantity: product.quantity,
+                                unit: product.unit,
+                                image: product.image ?? "",
+                                status: product.status,
+                                categoryId: product.categoryId,
+                                farmerId: product.farmerId,
+                            })
+                        }
                         className="h-11 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         Reset
@@ -385,22 +425,18 @@ const CreateProductForm = ({
 
                     <button
                         type="submit"
-                        disabled={
-                            isSubmitting ||
-                            categories.length === 0 ||
-                            farmers.length === 0
-                        }
-                        className="inline-flex h-11 min-w-[150px] items-center justify-center gap-2 rounded-lg bg-green-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+                        disabled={isSubmitting || categories.length === 0 || farmers.length === 0}
+                        className="inline-flex h-11 min-w-[160px] items-center justify-center gap-2 rounded-lg bg-green-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         {isSubmitting ? (
                             <>
                                 <Loader2 className="h-4 w-4 animate-spin" />
-                                Creating...
+                                Updating...
                             </>
                         ) : (
                             <>
                                 <Save className="h-4 w-4" />
-                                Create Product
+                                Update Product
                             </>
                         )}
                     </button>
@@ -410,4 +446,4 @@ const CreateProductForm = ({
     );
 };
 
-export default CreateProductForm;
+export default UpdateProductForm;
