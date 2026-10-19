@@ -61,6 +61,9 @@ import Categories from "@/app/(public)/_components/HomePage/categories";
 
 import { getAllFeatureProducts } from "@/app/(public)/_actions/getFeatureProducts";
 import { getAllCategories } from "@/app/(public)/_actions/getAllCategories";
+import Highlights from "@/app/(public)/_components/HomePage/highlights";
+import Statistics from "@/app/(public)/_components/HomePage/statistics";
+import FAQs from "@/app/(public)/_components/HomePage/FAQs";
 
 export const metadata: Metadata = createPageMetadata({
     title: "Home",
@@ -100,6 +103,9 @@ export default async function Home() {
             <Farmers />
             {/*<Experts />*/}
             <Testimonials />
+            <Highlights/>
+            <Statistics/>
+            <FAQs/>
             <CallToAction />
         </>
     );
