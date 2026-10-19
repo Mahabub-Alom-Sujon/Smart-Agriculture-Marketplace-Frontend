@@ -7,6 +7,9 @@ export interface Category {
     deletedAt: string | null;
     createdAt: string;
     updatedAt: string;
+    _count: {
+        products: number;
+    };
 }
 
 export interface CategoryMeta {

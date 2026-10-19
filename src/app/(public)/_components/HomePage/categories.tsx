@@ -1,97 +1,100 @@
-import React from 'react';
+"use client";
 import Link from "next/link";
-import {
-    ArrowRight
-} from "lucide-react";
-
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-
-const categories = [
-    {
-        name: "Vegetables",
-        icon: "🥬",
-        count: "120+ Products",
-    },
-    {
-        name: "Fruits",
-        icon: "🍎",
-        count: "85+ Products",
-    },
-    {
-        name: "Rice & Grains",
-        icon: "🌾",
-        count: "65+ Products",
-    },
-    {
-        name: "Organic Products",
-        icon: "🌱",
-        count: "90+ Products",
-    },
-    {
-        name: "Seeds",
-        icon: "🌰",
-        count: "45+ Products",
-    },
-    {
-        name: "Dairy",
-        icon: "🥛",
-        count: "35+ Products",
-    },
-];
-
-const Categories = () => {
+import type { Category } from "@/types/types.category";
+interface CategoriesProps {
+    categories: Category[];
+}
+const Categories = ({ categories }: CategoriesProps) => {
     return (
-        <>
-            <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-8">
-                    <div className="mb-10 flex items-end justify-between">
-                        <div>
-                            <p className="font-semibold text-green-600">Explore Products</p>
+        <section className="py-20">
+            <div className="container mx-auto px-4 lg:px-8">
+                {/* Section Header */}
+                <div className="mb-10 flex items-end justify-between">
+                     <div>
+                        <p className="font-semibold text-green-600">Explore Products</p>
+                         <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+                             Shop by Category
+                         </h2>
 
-                            <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-                                Shop by Category
-                            </h2>
+                         <p className="mt-3 max-w-xl text-slate-500">
+                             Find fresh and quality agricultural products from trusted
+                             farmers.
+                         </p>
+                     </div>
+                     <Button variant="ghost" className="px-4 py-5 hidden sm:flex  bg-green-600 hover:bg-green-700">
+                         <Link className="text-white inline-flex items-center" href="/products">
+                             View All
+                             <ArrowRight className="ml-2 h-4 w-4" />
+                         </Link>
+                     </Button>
+                </div>
 
-                            <p className="mt-3 max-w-xl text-slate-500">
-                                Find fresh and quality agricultural products from trusted
-                                farmers.
-                            </p>
-                        </div>
-
-                        <Button variant="ghost" className="hidden sm:flex">
-                            <Link href="/products">
-                                View All
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                        </Button>
-                    </div>
-
+                {/* Categories Grid */}
+                {categories.length > 0 ? (
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
                         {categories.map((category) => (
                             <Link
-                                key={category.name}
-                                href={`/products?category=${category.name}`}
+                                key={category.id}
+                                href={`/products?category=${encodeURIComponent(
+                                    category.name
+                                )}`}
+                                className="h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600"
                             >
-                                <Card className="group h-full border-slate-200 transition duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg">
-                                    <CardContent className="p-5 text-center">
-                                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-green-50 text-4xl transition group-hover:bg-green-100">
-                                            {category.icon}
+                                <Card className="group h-full border-slate-200 transition duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg p-0">
+                                    <CardContent className="p-4 text-center">
+                                        <div className="relative mx-auto flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-green-50 transition group-hover:bg-green-100">
+                                            {category.image ? (
+                                                <Image
+                                                    src={category.image}
+                                                    alt={category.name}
+                                                    fill
+                                                    sizes="64px"
+                                                    className="object-cover"
+                                                />
+                                            ) : (
+                                                <span className="text-4xl">
+                                                    🌱
+                                                </span>
+                                            )}
                                         </div>
 
-                                        <h3 className="mt-4 font-semibold">{category.name}</h3>
+                                        <h3 className="mt-3 font-semibold">
+                                            {category.name}
+                                        </h3>
 
                                         <p className="mt-1 text-xs text-slate-500">
-                                            {category.count}
+                                            {category._count.products ?? 0} Products
                                         </p>
                                     </CardContent>
                                 </Card>
                             </Link>
                         ))}
                     </div>
-                </div>
-            </section>
-        </>
+                ) : (
+                    <div className="rounded-xl border border-dashed border-slate-300 px-6 py-12 text-center">
+                        <p className="text-lg font-semibold text-slate-700">
+                            No categories available
+                        </p>
+
+                        <p className="mt-2 text-sm text-slate-500">
+                            Please check back later for available
+                            agricultural product categories.
+                        </p>
+
+                        <Button className="mt-5 px-4 py-5 hidden sm:flex  bg-green-600 hover:bg-green-700">
+                            <Link className="text-white inline-flex items-center" href="/products">
+                                Browse Products
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </Link>
+                        </Button>
+                    </div>
+                )}
+            </div>
+        </section>
     );
 };
 

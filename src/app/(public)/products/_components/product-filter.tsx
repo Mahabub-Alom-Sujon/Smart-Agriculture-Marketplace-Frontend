@@ -50,16 +50,26 @@ const ProductFilter = () => {
     }, [minPrice, maxPrice, searchParams]);
     useEffect(() => {
         const fetchCategories = async () => {
+            // ১. আগে চেক করে নেওয়া ইউআরএলটি পাওয়া যাচ্ছে কিনা
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            if (!apiUrl) {
+                console.error("NEXT_PUBLIC_API_URL is not defined in your environment variables!");
+                return;
+            }
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories`);
+                const res = await fetch(`${apiUrl}/api/v1/categories`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
                 const result = await res.json();
-                if (result.success && result.data && Array.isArray(result.data.data)) {
-                    setCategories(result.data.data);
+                if (result.success) {
+                    setCategories(result.data);
                 }
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
             }
         };
+
         fetchCategories();
     }, []);
 

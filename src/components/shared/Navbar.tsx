@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import {
   Heart,
   Leaf,
@@ -14,7 +15,6 @@ import {
   Sprout,
 } from "lucide-react";
 import { toast } from "sonner";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -25,18 +25,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { logout } from "@/service/logout";
 import { useCart } from "@/components/providers/CartProvider";
 import { useWishlist } from "@/components/providers/WishlistProvider";
-
-type UserRole =
-  | "FARMER"
-  | "BUYER"
-  | "EXPERT"
-  | "ADMIN"
-  | "SUPER_ADMIN";
-
+type UserRole = | "FARMER" | "BUYER" | "EXPERT" | "ADMIN" | "SUPER_ADMIN";
 type IUser = {
   success: boolean;
   message: string;
@@ -57,11 +49,9 @@ type IUser = {
     buyer?: null;
   };
 };
-
 type NavbarProps = {
   user: IUser;
 };
-
 const navigationLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Marketplace" },
@@ -70,14 +60,20 @@ const navigationLinks = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
-
 const Navbar = ({ user }: NavbarProps) => {
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const router = useRouter();
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const profile = user?.data;
   const isLoggedIn = Boolean(user?.success && profile);
+  useMemo(() => {
+    // No browser APIs or side effects here.
+    return true;
+  }, []);
+  const isDark = mounted && resolvedTheme === "dark";
   const initials = useMemo(() => {
     if (!profile?.name?.trim()) {
       return "U";
@@ -203,13 +199,11 @@ const Navbar = ({ user }: NavbarProps) => {
             </Link>
           ))}
         </nav>
-
         {/* Right Side Actions */}
         <div className="flex items-center gap-1 sm:gap-2">
           {/* Wishlist and Cart */}
           {renderWishlistLink()}
           {renderCartLink()}
-
           {/* Logged-in User */}
           {isLoggedIn && profile ? (
             <DropdownMenu>
@@ -232,7 +226,6 @@ const Navbar = ({ user }: NavbarProps) => {
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-
               <DropdownMenuContent
                 className="w-64 p-3"
                 align="end"
@@ -253,9 +246,7 @@ const Navbar = ({ user }: NavbarProps) => {
                     </div>
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
-
                 <DropdownMenuSeparator />
-
                 <DropdownMenuGroup>
                   <DropdownMenuItem
                     render={
@@ -268,7 +259,6 @@ const Navbar = ({ user }: NavbarProps) => {
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     Dashboard
                   </DropdownMenuItem>
-
                   <DropdownMenuItem
                     render={
                       <Link
@@ -281,9 +271,7 @@ const Navbar = ({ user }: NavbarProps) => {
                     Profile
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
-
                 <DropdownMenuSeparator />
-
                 <DropdownMenuItem
                   onClick={handleLogout}
                   className="cursor-pointer text-destructive focus:text-destructive"
@@ -301,7 +289,6 @@ const Navbar = ({ user }: NavbarProps) => {
               >
                 Login
               </Link>
-
               <Link
                 href="/register"
                 className="inline-flex h-9 items-center justify-center rounded-lg bg-green-600 px-4 text-sm font-semibold text-white transition hover:bg-green-700"
@@ -310,7 +297,6 @@ const Navbar = ({ user }: NavbarProps) => {
               </Link>
             </div>
           )}
-
           {/* Mobile Menu Toggle */}
           <button
             type="button"
@@ -328,7 +314,6 @@ const Navbar = ({ user }: NavbarProps) => {
           </button>
         </div>
       </div>
-
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div
@@ -362,7 +347,6 @@ const Navbar = ({ user }: NavbarProps) => {
                 </div>
               </div>
             )}
-
             {/* Navigation Links */}
             <nav
               aria-label="Mobile navigation"

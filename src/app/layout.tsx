@@ -6,6 +6,7 @@ import {Toaster} from "sonner";
 import {GoogleProvider} from "@/components/providers/GoogleProvider";
 import {CartProvider} from "@/components/providers/CartProvider";
 import {WishlistProvider} from "@/components/providers/WishlistProvider";
+import ThemeProvider from "@/components/providers/ThemeProvider";
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 const geistSans = Geist({
   variable: "--font-geist-sans",

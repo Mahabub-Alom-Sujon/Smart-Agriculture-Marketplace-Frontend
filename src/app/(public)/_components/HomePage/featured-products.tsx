@@ -1,58 +1,39 @@
-import React from 'react';
+"use client";
+import React, {useMemo} from 'react';
 import Link from "next/link";
+import Image from "next/image";
 import {
     ChevronRight,
-    MapPin,
+    Heart,
     ShoppingCart,
     Star,
+    User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-const products = [
-    {
-        name: "Fresh Organic Tomatoes",
-        farmer: "Rahim Agro Farm",
-        location: "Bogura, Bangladesh",
-        price: "৳120",
-        unit: "/ kg",
-        rating: "4.9",
-        image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-        name: "Premium Basmati Rice",
-        farmer: "Green Valley Farm",
-        location: "Dinajpur, Bangladesh",
-        price: "৳180",
-        unit: "/ kg",
-        rating: "4.8",
-        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-        name: "Fresh Mango",
-        farmer: "Mango Garden",
-        location: "Rajshahi, Bangladesh",
-        price: "৳150",
-        unit: "/ kg",
-        rating: "4.9",
-        image: "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-        name: "Organic Potatoes",
-        farmer: "Nature Fresh Farm",
-        location: "Rangpur, Bangladesh",
-        price: "৳70",
-        unit: "/ kg",
-        rating: "4.7",
-        image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=900&q=80",
-    },
-];
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import type { Product } from "@/types/types.product";
+import { useCart } from "@/components/providers/CartProvider";
+import { useWishlist } from "@/components/providers/WishlistProvider";
+interface FeaturedProductsProps {
+    products: Product[];
+}
 
-const FeaturedProducts = () => {
+const FeaturedProducts = ({
+    products,
+  }: FeaturedProductsProps) => {
+    const { addToCart, isInCart } = useCart();
+    const { toggleWishlist, isInWishlist } = useWishlist();
+    const featuredProducts = products.slice(0, 4);
+    if (featuredProducts.length === 0) {
+        return null;
+    }
     return (
         <>
-            <section className="bg-slate-50 py-20">
-                <div className="container mx-auto px-4 lg:px-8">
+            <section className="bg-slate-50 py-12 md:py-16">
+                <div className="container mx-auto px-4">
+                    {/* Section Header */}
                     <div className="mb-10 flex items-end justify-between">
                         <div>
                             <p className="font-semibold text-green-600">
@@ -65,74 +46,213 @@ const FeaturedProducts = () => {
                                 Fresh products directly from verified farmers.
                             </p>
                         </div>
-                        <Button variant="outline" className="px-4 py-5 hidden sm:flex  bg-green-600">
+                        <Button variant="outline" className="px-4 py-5 hidden sm:flex  bg-green-600 hover:bg-green-700">
                             <Link className="text-white inline-flex items-center gap-1" href="/products">
                                 Browse Marketplace
                                 <ChevronRight className="ml-1 h-4 w-4" />
                             </Link>
                         </Button>
                     </div>
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {products.map((product) => (
-                            <Card
-                                key={product.name}
-                                className="group overflow-hidden border-0 p-0 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-                            >
-                                <div className="relative overflow-hidden">
-                                    <img
-                                        src={product.image}
-                                        alt={product.name}
-                                        className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
-                                    />
+                    {/* Featured Product Cards */}
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {featuredProducts.map((product) => {
+                            const isOutOfStock = product.quantity <= 0;
+                            const isLowStock = product.quantity > 0 && product.quantity < 10;
+                            const isWishlisted = isInWishlist(product.id);
+                            const productInCart = isInCart(product.id);
+                            const farmerInitials = product.farmer.name?.slice(0, 2).toUpperCase() || "FR";
+                            const handleAddToCart = () => {
+                                if (isOutOfStock) return;
+                                addToCart(product);
+                            };
 
-                                    <Badge className="absolute left-3 top-3 bg-green-600 hover:bg-green-600">
-                                        Organic
-                                    </Badge>
+                            const handleWishlist = () => {
+                                toggleWishlist(product);
+                            };
 
-                                    <Button
-                                        size="icon"
-                                        variant="secondary"
-                                        className="absolute right-3 top-3 rounded-full"
-                                    >
-                                        <ShoppingCart className="h-4 w-4" />
-                                    </Button>
-                                </div>
+                            return (
+                                <Card
+                                    key={product.id}
+                                    className="group overflow-hidden border-slate-200 bg-white p-0 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                                >
+                                    {/* Product Image */}
+                                    <div className="relative h-52 w-full overflow-hidden bg-slate-100">
+                                        <Link
+                                            href={`/products/${product.id}`}
+                                            aria-label={`View ${product.name}`}
+                                        >
+                                            <Image
+                                                src={
+                                                    product.image ||
+                                                    "/placeholder-image.png"
+                                                }
+                                                alt={product.name}
+                                                fill
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                                                className="object-cover transition duration-500 group-hover:scale-105"
+                                            />
+                                        </Link>
 
-                                <CardContent className="p-5">
-                                    <div className="flex items-center gap-1 text-sm">
-                                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="font-semibold">{product.rating}</span>
-                                    </div>
-
-                                    <h3 className="mt-2 line-clamp-1 text-lg font-bold">
-                                        {product.name}
-                                    </h3>
-
-                                    <p className="mt-1 text-sm text-slate-500">
-                                        {product.farmer}
-                                    </p>
-
-                                    <div className="mt-2 flex items-center gap-1 text-xs text-slate-400">
-                                        <MapPin className="h-3.5 w-3.5" />
-                                        {product.location}
-                                    </div>
-
-                                    <div className="mt-5 flex items-center justify-between">
-                                        <div>
-                                          <span className="text-xl font-bold text-green-700">
-                                            {product.price}
-                                          </span>
-                                            <span className="text-sm text-slate-400">
-                                                {product.unit}
-                                            </span>
+                                        {/* Category */}
+                                        <div className="absolute left-3 top-3 z-10">
+                                            <Badge className="border-none bg-green-600 font-medium text-white hover:bg-green-600">
+                                                {product.category.name}
+                                            </Badge>
                                         </div>
-                                        <Button size="sm" className="bg-green-600 hover:bg-green-700">
-                                            View
+
+                                        {/* Wishlist */}
+                                        <Button
+                                            type="button"
+                                            size="icon"
+                                            variant="secondary"
+                                            onClick={handleWishlist}
+                                            aria-label={
+                                                isWishlisted
+                                                    ? "Remove from wishlist"
+                                                    : "Add to wishlist"
+                                            }
+                                            className="absolute right-3 top-3 z-10 h-9 w-9 rounded-full bg-white/90 shadow-sm backdrop-blur-sm hover:bg-white"
+                                        >
+                                            <Heart
+                                                className={`h-4 w-4 transition-colors ${
+                                                    isWishlisted
+                                                        ? "fill-red-500 text-red-500"
+                                                        : "text-slate-600"
+                                                }`}
+                                            />
                                         </Button>
+
+                                        {/* Low Stock */}
+                                        {isLowStock && (
+                                            <div className="absolute bottom-3 left-3 z-10 flex items-center gap-1 rounded-full bg-amber-500 px-3 py-1 text-[11px] font-bold text-white shadow-sm">
+                                                <span>Only</span>
+                                                <span className="font-extrabold">
+                                                {product.quantity}
+                                            </span>
+                                                <span>Left</span>
+                                            </div>
+                                        )}
+
+                                        {/* Out of Stock */}
+                                        {isOutOfStock && (
+                                            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 text-sm font-bold text-white backdrop-blur-[1px]">
+                                                Stock Out
+                                            </div>
+                                        )}
                                     </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+
+                                    {/* Product Details */}
+                                    <CardContent className="p-4">
+
+                                        {/* Reviews */}
+                                        <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                                            <div className="flex items-center gap-0.5">
+                                                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+
+                                                <span className="font-semibold text-slate-700">
+                                                {product._count.reviews > 0
+                                                    ? "4.5"
+                                                    : "New"}
+                                            </span>
+                                            </div>
+
+                                            <span>•</span>
+
+                                            <span>
+                                            ({product._count.reviews} reviews)
+                                        </span>
+                                        </div>
+
+                                        {/* Product Name */}
+                                        <Link
+                                            href={`/products/${product.id}`}
+                                        >
+                                            <h3 className="mt-1.5 line-clamp-1 text-base font-bold text-slate-800 transition hover:text-green-700">
+                                                {product.name}
+                                            </h3>
+                                        </Link>
+
+                                        {/* Description */}
+                                        <p className="mt-1 min-h-[32px] line-clamp-2 text-xs text-slate-500">
+                                            {product.description}
+                                        </p>
+
+                                        {/* Farmer Information */}
+                                        <div className="mt-3 flex items-center gap-2 border-t border-slate-100 pt-3">
+                                            <Avatar className="h-7 w-7 border border-slate-100">
+                                                <AvatarFallback className="bg-emerald-50 text-[9px] font-bold text-emerald-700">
+                                                    {farmerInitials || (
+                                                        <User className="h-3 w-3" />
+                                                    )}
+                                                </AvatarFallback>
+                                            </Avatar>
+
+                                            <div className="min-w-0 flex-1">
+                                                <p className="truncate text-xs font-medium text-slate-600">
+                                                    Farmer:{" "}
+                                                    <span className="font-semibold text-slate-800">
+                                                    {product.farmer.name}
+                                                </span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Price, Quantity and Cart */}
+                                        <div className="mt-4 flex items-end justify-between gap-2 border-t border-slate-200 pt-3">
+                                            <div className="min-w-0">
+                                                <div className="flex items-baseline">
+                                                <span className="text-lg font-extrabold text-green-700">
+                                                    ৳{product.price}
+                                                </span>
+
+                                                    <span className="ml-0.5 text-[11px] font-medium text-slate-400">
+                                                    /{product.unit.toLowerCase()}
+                                                </span>
+                                                </div>
+
+                                                {/* Available Quantity */}
+                                                <p
+                                                    className={`mt-1 text-[11px] font-semibold ${
+                                                        isOutOfStock
+                                                            ? "text-red-500"
+                                                            : isLowStock
+                                                                ? "text-amber-600"
+                                                                : "text-slate-500"
+                                                    }`}
+                                                >
+                                                    {isOutOfStock ? (
+                                                        "Out of stock"
+                                                    ) : (
+                                                        <>
+                                                            Available:{" "}
+                                                            <span className="font-bold">
+                                                            {product.quantity}
+                                                        </span>{" "}
+                                                            {product.unit.toLowerCase()}
+                                                        </>
+                                                    )}
+                                                </p>
+                                            </div>
+
+                                            {/* Add to Cart */}
+                                            <Button
+                                                type="button"
+                                                size="sm"
+                                                disabled={isOutOfStock}
+                                                onClick={handleAddToCart}
+                                                className="shrink-0 bg-green-600 transition-transform hover:bg-green-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                                            >
+                                                <ShoppingCart className="mr-1 h-3.5 w-3.5" />
+
+                                                {productInCart
+                                                    ? "Add More"
+                                                    : "Add"}
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

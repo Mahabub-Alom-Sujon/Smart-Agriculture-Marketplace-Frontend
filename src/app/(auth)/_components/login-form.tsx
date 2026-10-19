@@ -24,6 +24,14 @@ import {
 } from "@/components/ui/card";
 
 import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
+import {
     loginSchema,
     type LoginFormValues,
 } from "@/schemas/login.schema";
@@ -32,11 +40,12 @@ import { loginAction } from "@/app/(auth)/_actions/authActions";
 import { GoogleLoginButton } from "@/app/(auth)/_components/GoogleLoginButton";
 export function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
-    const router = useRouter(); // ২. রাউটার ইনিশিয়ালাইজ করুন
+    const router = useRouter();
     const [selectedRole, setSelectedRole] = useState<"FARMER" | "BUYER" | null>(null);
     const {
         register,
         handleSubmit,
+        setValue,
         formState: {
             errors,
             isSubmitting,
@@ -48,6 +57,30 @@ export function LoginForm() {
             password: "",
         },
     });
+
+    const handleDemoLogin = (
+        role: "ADMIN" | "FARMER"
+    ) => {
+        const demoCredentials = {
+            ADMIN: {
+                email: "testeradmin@gmail.com",
+                password: "Tester@admin12345",
+            },
+            FARMER: {
+                email: "test@gmail.com",
+                password: "Password@123",
+            },
+        };
+        const credentials = demoCredentials[role];
+        setValue("email", credentials.email, {
+            shouldValidate: true,
+        });
+        setValue("password", credentials.password, {
+            shouldValidate: true,
+        });
+        toast.success(`${role} demo credentials filled`);
+    };
+
     const onSubmit = async (data: LoginFormValues) => {
         try {
             const result = await loginAction({ ...data, role: selectedRole });
@@ -109,9 +142,9 @@ export function LoginForm() {
                             <label htmlFor="password" className="text-sm font-medium text-slate-700">
                                 Password
                             </label>
-                            <Link href="/forgot-password" className="text-xs font-medium text-green-600 transition hover:text-green-700">
-                                Forgot password?
-                            </Link>
+                            {/*<Link href="/forgot-password" className="text-xs font-medium text-green-600 transition hover:text-green-700">*/}
+                            {/*    Forgot password?*/}
+                            {/*</Link>*/}
                         </div>
                         <div className="relative">
                             <Lock className="absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -145,6 +178,32 @@ export function LoginForm() {
                             "Sign In"
                         )}
                     </Button>
+                    {/* Demo Login Buttons */}
+                    <div className="space-y-3">
+                        <p className="text-center text-sm font-medium text-slate-600">
+                            Try Demo Account
+                        </p>
+                        <div className="grid grid-cols-2 gap-3">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="h-11 border-purple-200 text-green-600 hover:text-white hover:bg-green-600"
+                                onClick={() => handleDemoLogin("ADMIN")}
+                            >
+                                Demo Admin
+                            </Button>
+
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="h-11 border-green-200 text-green-600 hover:bg-green-600 hover:text-white"
+                                onClick={() => handleDemoLogin("FARMER")}
+                            >
+                                <User className="mr-2 h-4 w-4" />
+                                Demo Farmer
+                            </Button>
+                        </div>
+                    </div>
 
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
@@ -154,31 +213,33 @@ export function LoginForm() {
                                 <span className="bg-background px-3 text-muted-foreground">OR</span>
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-lg mb-6">
-                        <button
-                            type="button"
-                            onClick={() => setSelectedRole("FARMER")}
-                            className={`flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-md transition-all ${
-                                selectedRole === "FARMER"
-                                    ? "bg-white text-green-700 shadow-sm"
-                                    : "text-slate-600 hover:text-slate-900"
-                            }`}
+                    {/* Role Selection - Google Login Only */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">
+                            Continue with Google as
+                        </label>
+                        <Select
+                            value={selectedRole ?? ""}
+                            onValueChange={(value) => setSelectedRole(value as "FARMER" | "BUYER")}
                         >
-                            <User className="h-4 w-4" />
-                            Farmer
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setSelectedRole("BUYER")}
-                            className={`flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-md transition-all ${
-                                selectedRole === "BUYER"
-                                    ? "bg-white text-green-700 shadow-sm"
-                                    : "text-slate-600 hover:text-slate-900"
-                            }`}
-                        >
-                            <ShoppingBag className="h-4 w-4" />
-                            Buyer
-                        </button>
+                            <SelectTrigger className="h-11 w-full">
+                                <SelectValue placeholder="Select your role" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="FARMER">
+                                    <span className="flex items-center gap-2">
+                                      <User className="h-4 w-4" />
+                                      Farmer
+                                    </span>
+                                </SelectItem>
+                                <SelectItem value="BUYER">
+                                    <span className="flex items-center gap-2">
+                                      <ShoppingBag className="h-4 w-4" />
+                                      Buyer
+                                    </span>
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <GoogleLoginButton role={selectedRole} />
                     <div className="text-center text-sm text-slate-600 pt-2">

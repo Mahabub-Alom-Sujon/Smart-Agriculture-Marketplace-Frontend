@@ -98,7 +98,11 @@ export interface ProductMeta {
     total: number;
     totalPage: number;
 }
-
+export interface ProductResponse {
+    success: boolean;
+    message: string;
+    data: Product[];
+}
 export interface SingleProductResponse {
     success: boolean;
     message: string;
