@@ -1,8 +1,11 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import { SearchIcon } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+    usePathname,
+    useRouter,
+    useSearchParams,
+} from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 
@@ -47,6 +50,7 @@ const ProductSearchBar = () => {
         }, 500);
     };
 
+    // Cleanup debounce timer
     useEffect(() => {
         return () => {
             if (debouncedReference.current) {
@@ -57,13 +61,43 @@ const ProductSearchBar = () => {
 
     return (
         <div className="relative flex w-full max-w-[400px] items-center">
-            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <SearchIcon
+                className="
+                    pointer-events-none absolute left-3 top-1/2
+                    h-5 w-5 -translate-y-1/2
+                    text-slate-400
+                    transition-colors duration-200
+                    dark:text-slate-500
+                "
+                aria-hidden="true"
+            />
 
             <Input
+                type="search"
                 value={searchTerm}
                 onChange={(event) => handleChange(event.target.value)}
                 placeholder="Search Product..."
-                className="h-12 w-full pl-10"
+                aria-label="Search products"
+                className="
+                    h-12 w-full rounded-xl pl-10 pr-4
+                    border border-slate-200
+                    bg-white text-slate-900
+                    placeholder:text-slate-400
+                    shadow-sm
+                    transition-all duration-200
+                    hover:border-green-300
+                    focus-visible:border-green-500
+                    focus-visible:ring-2
+                    focus-visible:ring-green-500/20
+                    focus-visible:ring-offset-0
+                    dark:border-slate-700
+                    dark:bg-slate-900
+                    dark:text-slate-100
+                    dark:placeholder:text-slate-500
+                    dark:hover:border-green-700
+                    dark:focus-visible:border-green-500
+                    dark:focus-visible:ring-green-500/20
+                "
             />
         </div>
     );

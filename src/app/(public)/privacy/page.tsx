@@ -13,10 +13,10 @@ export const metadata: Metadata = createPageMetadata({
 const Page = () => {
     return (
         <>
-            <main>
+            <main className="min-h-screen bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
                 <PrivacyHero/>
                 <PrivacyOverview/>
-                <section className="bg-gray-50 py-16 lg:py-20">
+                <section className="bg-gray-50 py-16 lg:py-20 bg-gray-50 py-16 transition-colors duration-300 dark:bg-slate-950 lg:py-20">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-14">
                             <PrivacySidebar />

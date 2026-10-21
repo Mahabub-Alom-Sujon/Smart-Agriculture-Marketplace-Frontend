@@ -10,9 +10,9 @@ interface ExpertPaginationProps {
     searchTerm: string;
 }
 export default function ExpertPagination({
-     currentPage,
-     totalPages,
-     searchTerm,
+    currentPage,
+    totalPages,
+    searchTerm,
 }: ExpertPaginationProps) {
     const router = useRouter();
     const goToPage = (page: number) => {
@@ -34,10 +34,7 @@ export default function ExpertPagination({
             behavior: "smooth",
         });
     };
-
-    const getPages = (): Array<
-        number | "..."
-    > => {
+    const getPages = (): Array<number | "..."> => {
         if (totalPages <= 5) {
             return Array.from(
                 { length: totalPages },
@@ -72,7 +69,7 @@ export default function ExpertPagination({
     };
 
     const pages = getPages();
-
+    const navigationButtonClass = "inline-flex h-10 items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-600 transition-all duration-200 hover:border-green-200 hover:bg-green-50 hover:text-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/50 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950 dark:disabled:hover:border-slate-700 dark:disabled:hover:bg-slate-900 dark:disabled:hover:text-slate-300";
     return (
         <nav
             className="flex flex-wrap items-center justify-center gap-2"
@@ -81,11 +78,9 @@ export default function ExpertPagination({
             {/* Previous */}
             <button
                 type="button"
-                disabled={currentPage === 1}
-                onClick={() =>
-                    goToPage(currentPage - 1)
-                }
-                className="inline-flex h-10 items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-600 transition-all hover:border-green-200 hover:bg-green-50 hover:text-green-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600"
+                disabled={currentPage <= 1}
+                onClick={() => goToPage(currentPage - 1)}
+                className={navigationButtonClass}
                 aria-label="Previous page"
             >
                 <ChevronLeft className="h-4 w-4" />
@@ -101,53 +96,44 @@ export default function ExpertPagination({
                     return (
                         <span
                             key={`ellipsis-${index}`}
-                            className="flex h-10 w-10 items-center justify-center text-sm text-slate-400"
+                            className="flex h-10 w-10 items-center justify-center text-sm text-slate-400 dark:text-slate-500"
+                            aria-hidden="true"
                         >
                             ...
                         </span>
                     );
                 }
 
-                const isActive =
-                    page === currentPage;
+                const isActive = page === currentPage;
 
                 return (
                     <button
                         key={page}
                         type="button"
                         onClick={() => goToPage(page)}
-                        className={`h-10 min-w-10 rounded-xl px-3 text-sm font-semibold transition-all ${
-                            isActive
-                                ? "bg-green-600 text-white shadow-md shadow-green-600/20"
-                                : "border border-slate-200 bg-white text-slate-600 hover:border-green-200 hover:bg-green-50 hover:text-green-700"
+                        className={`h-10 min-w-10 rounded-xl px-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950 ${
+                        isActive
+                        ? "bg-green-600 text-white shadow-md shadow-green-600/20 hover:bg-green-700 dark:bg-emerald-600 dark:text-white dark:hover:bg-emerald-500"
+                        : "border border-slate-200 bg-white text-slate-600 hover:border-green-200 hover:bg-green-50 hover:text-green-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/50 dark:hover:text-emerald-300"
                         }`}
-                        aria-current={
-                            isActive
-                                ? "page"
-                                : undefined
-                        }
+                        aria-current={isActive ? "page" : undefined}
+                        aria-label={`Page ${page}`}
                     >
                         {page}
                     </button>
                 );
             })}
-
             {/* Next */}
             <button
                 type="button"
-                disabled={
-                    currentPage === totalPages
-                }
-                onClick={() =>
-                    goToPage(currentPage + 1)
-                }
-                className="inline-flex h-10 items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-600 transition-all hover:border-green-200 hover:bg-green-50 hover:text-green-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600"
+                disabled={currentPage >= totalPages}
+                onClick={() => goToPage(currentPage + 1)}
+                className={navigationButtonClass}
                 aria-label="Next page"
             >
                 <span className="hidden sm:inline">
                     Next
                 </span>
-
                 <ChevronRight className="h-4 w-4" />
             </button>
         </nav>

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { createPageMetadata } from "@/lib/metadata";
 import HeroSection from "@/app/(public)/_components/HomePage/hero-section";
 import FeaturedProducts from "@/app/(public)/_components/HomePage/featured-products";
-import Farmers from "@/app/(public)/_components/HomePage/farmers";
 import Testimonials from "@/app/(public)/_components/HomePage/testimonials";
 import CallToAction from "@/app/(public)/_components/HomePage/call-to-action";
 import Experts from "@/app/(public)/_components/HomePage/experts";
@@ -47,18 +46,20 @@ export default async function Home() {
 
     return (
         <>
-            <HeroSection />
-            <Categories categories={categories} />
-            <FeaturedProducts
-                products={shuffledProducts.slice(0, 4)}
-            />
-            <FarmersSection farmers={ farmers }/>
-            {/*<Experts />*/}
-            <Testimonials />
-            <Highlights/>
-            <Statistics/>
-            <FAQs/>
-            <CallToAction />
+            <main className="min-h-screen bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+                <HeroSection />
+                <Categories categories={categories} />
+                <FeaturedProducts
+                    products={shuffledProducts.slice(0, 4)}
+                />
+                <FarmersSection farmers={ farmers }/>
+                {/*<Experts />*/}
+                <Testimonials />
+                <Highlights/>
+                <Statistics/>
+                <FAQs/>
+                <CallToAction />
+            </main>
         </>
     );
 }

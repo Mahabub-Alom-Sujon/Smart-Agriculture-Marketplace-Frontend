@@ -26,7 +26,9 @@ export default function CheckoutPage() {
     const handlePay = async (): Promise<void> => {
         if (isSubmitting) return;
         if (!customer) {
-            toast.error("Please wait for your customer details to load.");
+            toast.error(
+                "Please wait for your customer details to load.",
+            );
             return;
         }
         const requiredFields: Array<keyof PaymentFormValues> = [
@@ -37,16 +39,13 @@ export default function CheckoutPage() {
             "city",
             "country",
         ];
-
         const hasMissingField = requiredFields.some(
             (field) => !String(customer[field] ?? "").trim(),
         );
-
         if (hasMissingField) {
             toast.error("Please complete all customer details.");
             return;
         }
-
         if (cartItems.length === 0) {
             toast.error("Your cart is empty.");
             return;
@@ -77,12 +76,17 @@ export default function CheckoutPage() {
                 );
                 return;
             }
+
             const orderId = orderResult.data.orderId;
+
             // Step 2: Create the Stripe payment session.
-            toast.loading("Creating secure payment session...", {
-                id: toastId,
-            });
+            toast.loading(
+                "Creating secure payment session...",
+                { id: toastId },
+            );
+
             const paymentResult = await createPayment({ orderId });
+
             if (!paymentResult.success) {
                 toast.error(
                     paymentResult.message ||
@@ -91,7 +95,9 @@ export default function CheckoutPage() {
                 );
                 return;
             }
+
             const checkoutUrl = paymentResult.data?.checkoutUrl;
+
             if (
                 !checkoutUrl ||
                 !checkoutUrl.startsWith("https://")
@@ -102,12 +108,16 @@ export default function CheckoutPage() {
                 );
                 return;
             }
-            toast.success("Redirecting to secure payment...", {
-                id: toastId,
-            });
+
+            toast.success(
+                "Redirecting to secure payment...",
+                { id: toastId },
+            );
+
             window.location.assign(checkoutUrl);
         } catch (error: unknown) {
             console.error("Checkout error:", error);
+
             toast.error(
                 "Unable to start checkout. Please try again.",
                 { id: toastId },
@@ -117,25 +127,25 @@ export default function CheckoutPage() {
         }
     };
 
+    // Empty Cart
     if (cartItems.length === 0) {
         return (
-            <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-                <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
-                        <ShoppingBag className="h-8 w-8 text-emerald-600" />
+            <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+                <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/10">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 transition-colors duration-300 dark:bg-emerald-950/50">
+                        <ShoppingBag className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
                     </div>
 
-                    <h1 className="mt-5 text-2xl font-bold text-slate-900">
+                    <h1 className="mt-5 text-2xl font-bold text-slate-900 dark:text-slate-100">
                         Your cart is empty
                     </h1>
 
-                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                    <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
                         Add products to your cart before proceeding to checkout.
                     </p>
 
                     <Button
-                        //asChild
-                        className="mt-6 bg-emerald-600 hover:bg-emerald-700"
+                        className="mt-6 bg-emerald-600 text-white transition-colors hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                     >
                         <Link href="/products">
                             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -147,9 +157,10 @@ export default function CheckoutPage() {
         );
     }
 
+    // Checkout Page
     return (
-        <main className="min-h-screen bg-slate-50">
-            <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <main className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+            <div className="mx-auto max-w-7xl px-4 py-8 transition-colors duration-300 sm:px-6 lg:px-8">
                 <PaymentHeader />
 
                 <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
@@ -162,6 +173,7 @@ export default function CheckoutPage() {
 
                         <PaymentMethod />
 
+                        {/* Mobile Order Summary */}
                         <div className="lg:hidden">
                             <PaymentSummary
                                 isSubmitting={isSubmitting}
@@ -170,6 +182,7 @@ export default function CheckoutPage() {
                         </div>
                     </div>
 
+                    {/* Desktop Order Summary */}
                     <div className="hidden lg:block">
                         <PaymentSummary
                             isSubmitting={isSubmitting}

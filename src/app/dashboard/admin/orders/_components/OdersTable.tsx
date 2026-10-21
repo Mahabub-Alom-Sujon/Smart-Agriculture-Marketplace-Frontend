@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import {
     ShoppingCart,
@@ -16,16 +17,26 @@ interface OrdersTableProps {
 }
 
 const statusStyles: Record<OrderStatus, string> = {
-    PENDING: "bg-amber-50 text-amber-700",
-    PAYMENT_PENDING: "bg-orange-50 text-orange-700",
-    PAID: "bg-blue-50 text-blue-700",
-    CONFIRMED: "bg-sky-50 text-sky-700",
-    PROCESSING: "bg-indigo-50 text-indigo-700",
-    SHIPPED: "bg-purple-50 text-purple-700",
-    COMPLETED: "bg-emerald-50 text-green-600",
-    DELIVERED: "bg-green-50 text-green-700",
-    CANCELLED: "bg-red-50 text-red-700",
-    REFUNDED: "bg-rose-50 text-rose-700",
+    PENDING:
+        "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+    PAYMENT_PENDING:
+        "bg-orange-50 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
+    PAID:
+        "bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400",
+    CONFIRMED:
+        "bg-sky-50 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
+    PROCESSING:
+        "bg-indigo-50 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400",
+    SHIPPED:
+        "bg-purple-50 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400",
+    COMPLETED:
+        "bg-emerald-50 text-green-600 dark:bg-emerald-500/15 dark:text-emerald-400",
+    DELIVERED:
+        "bg-green-50 text-green-700 dark:bg-green-500/15 dark:text-green-400",
+    CANCELLED:
+        "bg-red-50 text-red-700 dark:bg-red-500/15 dark:text-red-400",
+    REFUNDED:
+        "bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400",
 };
 
 const formatStatus = (status: OrderStatus) =>
@@ -34,49 +45,52 @@ const formatStatus = (status: OrderStatus) =>
         .replaceAll("_", " ")
         .replace(/\b\w/g, (char) => char.toUpperCase());
 
-export default function OrdersTable({
-    orders,
-}: OrdersTableProps) {
+export default function OrdersTable({ orders }: OrdersTableProps) {
     const router = useRouter();
+
     const [openActionId, setOpenActionId] = useState<string | null>(
         null
     );
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(
         null
     );
+
     const handleView = (order: Order) => {
         setOpenActionId(null);
         setSelectedOrder(order);
     };
+
     return (
         <>
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
                 {/* Header */}
-                <div className="border-b border-slate-200 px-5 py-4">
+                <div className="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h2 className="font-semibold text-slate-900">
+                            <h2 className="font-semibold text-slate-900 dark:text-slate-100">
                                 Order List
                             </h2>
-                            <p className="mt-1 text-xs text-slate-500">
+                            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                                 Manage and track marketplace orders
                             </p>
                         </div>
-                        <ShoppingCart className="h-5 w-5 text-green-600" />
+
+                        <ShoppingCart className="h-5 w-5 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
+
                 {/* Empty State */}
                 {orders.length === 0 ? (
                     <div className="flex min-h-60 flex-col items-center justify-center px-6 text-center">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
-                            <ShoppingCart className="h-7 w-7 text-emerald-600" />
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-500/10">
+                            <ShoppingCart className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
                         </div>
 
-                        <h3 className="mt-4 font-semibold text-slate-900">
+                        <h3 className="mt-4 font-semibold text-slate-900 dark:text-slate-100">
                             No orders found
                         </h3>
 
-                        <p className="mt-1 max-w-sm text-sm text-slate-500">
+                        <p className="mt-1 max-w-sm text-sm text-slate-500 dark:text-slate-400">
                             No orders are available. Try changing your
                             search keyword.
                         </p>
@@ -85,55 +99,49 @@ export default function OrdersTable({
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[1050px]">
                             <thead>
-                            <tr className="border-b border-slate-200 bg-slate-50">
-                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            <tr className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/60">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Order
                                 </th>
-
-                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Buyer
                                 </th>
-
-                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Amount
                                 </th>
-
-                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Delivery Address
                                 </th>
-
-                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Status
                                 </th>
-
-                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Created
                                 </th>
-
-                                <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     Action
                                 </th>
                             </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-slate-100">
+                            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                             {orders.map((order) => (
                                 <tr
                                     key={order.id}
-                                    className="transition-colors hover:bg-slate-50"
+                                    className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
                                 >
                                     {/* Order Number */}
                                     <td className="px-5 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-                                                <ShoppingCart className="h-5 w-5 text-emerald-600" />
+                                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-500/10">
+                                                <ShoppingCart className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                                             </div>
 
                                             <div>
-                                                <p className="font-semibold text-slate-900">
+                                                <p className="font-semibold text-slate-900 dark:text-slate-100">
                                                     {order.orderNumber}
                                                 </p>
-                                                <p className="mt-0.5 text-xs text-slate-400">
+                                                <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                                                     {order.id.slice(0, 8)}...
                                                 </p>
                                             </div>
@@ -142,28 +150,29 @@ export default function OrdersTable({
 
                                     {/* Buyer */}
                                     <td className="px-5 py-4">
-                                        <p className="font-medium text-slate-900">
+                                        <p className="font-medium text-slate-900 dark:text-slate-100">
                                             {order.buyer.name}
                                         </p>
-                                        <p className="mt-0.5 text-xs text-slate-500">
+                                        <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                                             {order.buyer.email}
                                         </p>
                                     </td>
 
                                     {/* Amount */}
                                     <td className="whitespace-nowrap px-5 py-4">
-                                            <span className="font-semibold text-slate-900">
-                                                ৳{order.totalAmount.toLocaleString(
-                                                "en-BD"
-                                            )}
+                                            <span className="font-semibold text-slate-900 dark:text-slate-100">
+                                                ৳
+                                                {order.totalAmount.toLocaleString(
+                                                    "en-BD"
+                                                )}
                                             </span>
                                     </td>
 
                                     {/* Delivery Address */}
                                     <td className="max-w-xs px-5 py-4">
                                         <div className="flex items-start gap-2">
-                                            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
-                                            <p className="line-clamp-2 text-sm text-slate-600">
+                                            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate-400 dark:text-slate-500" />
+                                            <p className="line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
                                                 {order.deliveryAddress ||
                                                     "No address available"}
                                             </p>
@@ -182,7 +191,7 @@ export default function OrdersTable({
                                     </td>
 
                                     {/* Created */}
-                                    <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-500">
+                                    <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-500 dark:text-slate-400">
                                         {moment(order.createdAt).format(
                                             "MMM Do, YYYY"
                                         )}
@@ -203,19 +212,19 @@ export default function OrdersTable({
                                                         : order.id
                                                 )
                                             }
-                                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+                                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                                         >
                                             <MoreHorizontal className="h-5 w-5" />
                                         </button>
 
                                         {openActionId === order.id && (
-                                            <div className="absolute right-5 top-14 z-50 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 text-left shadow-lg">
+                                            <div className="absolute right-5 top-14 z-50 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900">
                                                 <button
                                                     type="button"
                                                     onClick={() =>
                                                         handleView(order)
                                                     }
-                                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
+                                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10 dark:hover:text-emerald-400"
                                                 >
                                                     <Eye className="h-4 w-4" />
                                                     View Details
@@ -229,7 +238,7 @@ export default function OrdersTable({
                                                             `/dashboard/admin/orders/${order.id}`
                                                         );
                                                     }}
-                                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+                                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800"
                                                 >
                                                     <ShoppingCart className="h-4 w-4" />
                                                     Open Order
@@ -248,25 +257,25 @@ export default function OrdersTable({
             {/* Order Details Modal */}
             {selectedOrder && (
                 <div
-                    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/40 p-4"
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm"
                     onClick={() => setSelectedOrder(null)}
                 >
                     <div
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby="order-details-title"
-                        className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+                        className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 shadow-xl transition-colors duration-300 dark:border-slate-700 dark:bg-slate-900"
                         onClick={(event) => event.stopPropagation()}
                     >
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <h2
                                     id="order-details-title"
-                                    className="text-lg font-bold text-slate-900"
+                                    className="text-lg font-bold text-slate-900 dark:text-slate-100"
                                 >
                                     Order Details
                                 </h2>
-                                <p className="mt-1 text-sm text-slate-500">
+                                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                                     {selectedOrder.orderNumber}
                                 </p>
                             </div>
@@ -275,7 +284,7 @@ export default function OrdersTable({
                                 type="button"
                                 aria-label="Close order details"
                                 onClick={() => setSelectedOrder(null)}
-                                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
+                                className="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                             >
                                 <X className="h-5 w-5" />
                             </button>
@@ -283,36 +292,37 @@ export default function OrdersTable({
 
                         <div className="mt-6 space-y-4">
                             <div className="flex items-center justify-between gap-4">
-                                <span className="text-sm text-slate-500">
+                                <span className="text-sm text-slate-500 dark:text-slate-400">
                                     Buyer
                                 </span>
-                                <span className="text-right text-sm font-medium text-slate-900">
+                                <span className="text-right text-sm font-medium text-slate-900 dark:text-slate-100">
                                     {selectedOrder.buyer.name}
                                 </span>
                             </div>
 
                             <div className="flex items-center justify-between gap-4">
-                                <span className="text-sm text-slate-500">
+                                <span className="text-sm text-slate-500 dark:text-slate-400">
                                     Email
                                 </span>
-                                <span className="break-all text-right text-sm text-slate-700">
+                                <span className="break-all text-right text-sm text-slate-700 dark:text-slate-300">
                                     {selectedOrder.buyer.email}
                                 </span>
                             </div>
 
                             <div className="flex items-center justify-between gap-4">
-                                <span className="text-sm text-slate-500">
+                                <span className="text-sm text-slate-500 dark:text-slate-400">
                                     Total Amount
                                 </span>
-                                <span className="text-sm font-bold text-green-700">
-                                    ৳{selectedOrder.totalAmount.toLocaleString(
-                                    "en-BD"
-                                )}
+                                <span className="text-sm font-bold text-green-700 dark:text-green-400">
+                                    ৳
+                                    {selectedOrder.totalAmount.toLocaleString(
+                                        "en-BD"
+                                    )}
                                 </span>
                             </div>
 
                             <div className="flex items-center justify-between gap-4">
-                                <span className="text-sm text-slate-500">
+                                <span className="text-sm text-slate-500 dark:text-slate-400">
                                     Status
                                 </span>
                                 <span
@@ -325,20 +335,20 @@ export default function OrdersTable({
                             </div>
 
                             <div>
-                                <p className="mb-1 text-sm text-slate-500">
+                                <p className="mb-1 text-sm text-slate-500 dark:text-slate-400">
                                     Delivery Address
                                 </p>
-                                <p className="rounded-lg bg-slate-50 p-3 text-sm leading-6 text-slate-700">
+                                <p className="rounded-lg bg-slate-50 p-3 text-sm leading-6 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     {selectedOrder.deliveryAddress ||
                                         "No address available"}
                                 </p>
                             </div>
 
                             <div className="flex items-center justify-between gap-4">
-                                <span className="text-sm text-slate-500">
+                                <span className="text-sm text-slate-500 dark:text-slate-400">
                                     Order Date
                                 </span>
-                                <span className="text-right text-sm text-slate-700">
+                                <span className="text-right text-sm text-slate-700 dark:text-slate-300">
                                     {moment(
                                         selectedOrder.createdAt
                                     ).format("MMM Do, YYYY h:mm A")}
@@ -349,7 +359,7 @@ export default function OrdersTable({
                         <button
                             type="button"
                             onClick={() => setSelectedOrder(null)}
-                            className="mt-6 w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+                            className="mt-6 w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                         >
                             Close
                         </button>

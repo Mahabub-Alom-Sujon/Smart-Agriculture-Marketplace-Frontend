@@ -4,7 +4,8 @@ import { getAllExperts } from "./_actions/expertAction";
 import ExpertsPage from "./_components/ExpertsPage";
 export const metadata: Metadata = createPageMetadata({
     title: "Agricultural Experts",
-    description: "Find agricultural experts for crop management, soil health, and farming consultation.",
+    description:
+        "Find agricultural experts for crop management, soil health, and farming consultation.",
     path: "/experts",
 });
 export const revalidate = 300;
@@ -14,7 +15,6 @@ interface ExpertsRouteProps {
         page?: string;
     }>;
 }
-
 export default async function ExpertsRoute({
     searchParams,
 }: ExpertsRouteProps) {
@@ -31,7 +31,7 @@ export default async function ExpertsRoute({
         limit,
     });
     return (
-        <main className="min-h-screen bg-slate-50">
+        <main className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
             <ExpertsPage
                 experts={response.data}
                 meta={response.meta}

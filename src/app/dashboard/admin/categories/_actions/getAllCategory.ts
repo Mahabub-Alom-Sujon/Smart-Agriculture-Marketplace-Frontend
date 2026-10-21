@@ -25,7 +25,7 @@ export const getAllCategory = async ({
         params.set("searchTerm", searchTerm.trim());
     }
     const res = await fetch(
-        `${API_URL}/api/v1/categories?${params.toString()}`,
+        `${API_URL}/api/v1/categories//admin?${params.toString()}`,
         {
             method: "GET",
             headers: {

@@ -1,23 +1,32 @@
-import React from 'react';
+import React from "react";
 import ProductHeader from "@/app/dashboard/admin/products/_components/ProductHeader";
-import type {Product, ProductMeta } from "@/types/types.product";
 import ProductTable from "@/app/dashboard/admin/products/_components/ProductTable";
 import ProductSearch from "@/app/dashboard/admin/products/_components/ProductSearch";
 import ProductPagination from "@/app/dashboard/admin/products/_components/ProductPagination";
-
+import type { Product, ProductMeta } from "@/types/types.product";
 interface ProductPageProps {
     products: Product[];
     meta: ProductMeta;
     searchTerm: string;
 }
-
-const ProductPage = ({ products, meta, searchTerm }: ProductPageProps) => {
+const ProductPage = ({
+    products,
+    meta,
+    searchTerm,
+}: ProductPageProps) => {
     return (
-        <>
-            <div className="space-y-6">
+        <main className="min-h-screen bg-slate-50 transition-colors duration-300 dark:bg-slate-950 rounded-2xl">
+            <div className="space-y-6 p-6">
+                {/* Header */}
                 <ProductHeader />
-                <ProductSearch initialSearchTerm={ searchTerm }/>
-                <ProductTable products={products}/>
+
+                {/* Search */}
+                <ProductSearch initialSearchTerm={searchTerm} />
+
+                {/* Product Table */}
+                <ProductTable products={products} />
+
+                {/* Pagination */}
                 {meta.totalPage > 1 && (
                     <ProductPagination
                         currentPage={meta.page}
@@ -26,7 +35,7 @@ const ProductPage = ({ products, meta, searchTerm }: ProductPageProps) => {
                     />
                 )}
             </div>
-        </>
+        </main>
     );
 };
 

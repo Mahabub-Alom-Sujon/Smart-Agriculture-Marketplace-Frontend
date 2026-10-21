@@ -1,79 +1,367 @@
+// import { CheckCircle2, Info } from "lucide-react";
+// const PrivacyContent = () => {
+//     return (
+//         <article className="min-w-0 space-y-14">
+//             {/* Introduction */}
+//             <section id="introduction" className="scroll-mt-24">
+//                 <div className="mb-4 flex items-center gap-3">
+//                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100">
+//                         <Info className="h-5 w-5 text-green-600" />
+//                     </div>
+//                     <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                         1. Introduction
+//                     </h2>
+//                 </div>
+//                 <div className="space-y-4 text-gray-600 leading-7">
+//                     <p>
+//                         Welcome to AgroNexa. We respect your privacy and are
+//                         committed to protecting the personal information you
+//                         share with us.
+//                     </p>
+//                     <p>
+//                         This Privacy Policy explains how AgroNexa collects,
+//                         uses, stores, and protects information when you use
+//                         our website, marketplace, services, and related
+//                         features.
+//                     </p>
+//                     <p>
+//                         By using AgroNexa, you acknowledge that you have read
+//                         and understood this Privacy Policy.
+//                     </p>
+//                 </div>
+//             </section>
+//             {/* Information */}
+//             <section id="information" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     2. Information We Collect
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     Depending on how you use AgroNexa, we may collect
+//                     different types of information.
+//                 </p>
+//                 <div className="mt-6 space-y-6">
+//                     <div>
+//                         <h3 className="font-bold text-gray-900">
+//                             Account Information
+//                         </h3>
+//                         <p className="mt-2 leading-7 text-gray-600">
+//                             When you create an account, we may collect your
+//                             name, email address, phone number, password,
+//                             profile information, and account role.
+//                         </p>
+//                     </div>
+//                     <div>
+//                         <h3 className="font-bold text-gray-900">
+//                             Marketplace Information
+//                         </h3>
+//                         <p className="mt-2 leading-7 text-gray-600">
+//                             Farmers and sellers may provide information about
+//                             products, prices, quantities, categories, and
+//                             other marketplace details.
+//                         </p>
+//                     </div>
+//                     <div>
+//                         <h3 className="font-bold text-gray-900">
+//                             Communication Information
+//                         </h3>
+//                         <p className="mt-2 leading-7 text-gray-600">
+//                             If you contact us, we may keep the information
+//                             included in your message and our response.
+//                         </p>
+//                     </div>
+//                     <div>
+//                         <h3 className="font-bold text-gray-900">
+//                             Technical Information
+//                         </h3>
+//                         <p className="mt-2 leading-7 text-gray-600">
+//                             We may automatically receive information such as
+//                             browser type, device information, IP address,
+//                             pages visited, and general usage information.
+//                         </p>
+//                     </div>
+//                 </div>
+//             </section>
+//             {/* Usage */}
+//             <section id="usage" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     3. How We Use Information
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     We may use collected information for purposes including:
+//                 </p>
+//                 <ul className="mt-6 space-y-3">
+//                     {[
+//                         "Creating and managing user accounts",
+//                         "Providing marketplace and platform services",
+//                         "Processing and managing user requests",
+//                         "Improving our website and user experience",
+//                         "Communicating with users about services",
+//                         "Detecting fraud, abuse, and security issues",
+//                         "Maintaining and improving platform performance",
+//                         "Complying with applicable legal requirements",
+//                     ].map((item) => (
+//                         <li
+//                             key={item}
+//                             className="flex items-start gap-3 text-gray-600"
+//                         >
+//                             <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-green-600" />
+//
+//                             <span>{item}</span>
+//                         </li>
+//                     ))}
+//                 </ul>
+//             </section>
+//             {/* Sharing */}
+//             <section id="sharing" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     4. Information Sharing
+//                 </h2>
+//                 <div className="mt-4 space-y-4 leading-7 text-gray-600">
+//                     <p>
+//                         We do not sell your personal information as part of
+//                         our ordinary business operations.
+//                     </p>
+//                     <p>
+//                         We may share information with trusted service
+//                         providers when necessary to operate, maintain, or
+//                         improve our services.
+//                     </p>
+//                     <p>
+//                         We may also disclose information when required by law,
+//                         to protect our rights, prevent fraud, or protect the
+//                         safety of users and the platform.
+//                     </p>
+//                 </div>
+//             </section>
+//             {/* Security */}
+//             <section id="security" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     5. Data Security
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     We use reasonable technical and organizational measures
+//                     designed to protect personal information against
+//                     unauthorized access, alteration, disclosure, or
+//                     destruction.
+//                 </p>
+//                 <div className="mt-6 rounded-2xl border border-green-100 bg-green-50 p-5">
+//                     <p className="text-sm leading-6 text-green-800">
+//                         <strong>Important:</strong> No online service can
+//                         guarantee absolute security. We continuously work to
+//                         improve the security of our platform and systems.
+//                     </p>
+//                 </div>
+//             </section>
+//             {/* Cookies */}
+//             <section id="cookies" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     6. Cookies
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     AgroNexa may use cookies and similar technologies to
+//                     remember preferences, maintain sessions, understand
+//                     platform usage, and improve the overall user experience.
+//                 </p>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     You may configure your browser to refuse or limit
+//                     cookies. However, some features of the platform may not
+//                     function correctly without certain cookies.
+//                 </p>
+//             </section>
+//             {/* Rights */}
+//             <section id="rights" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     7. Your Privacy Rights
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     Depending on applicable laws, you may have rights
+//                     regarding your personal information.
+//                 </p>
+//                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
+//                     {[
+//                         "Access your personal information",
+//                         "Correct inaccurate information",
+//                         "Request deletion of certain information",
+//                         "Withdraw certain permissions",
+//                         "Ask questions about our data practices",
+//                         "Submit privacy-related requests",
+//                     ].map((item) => (
+//                         <div
+//                             key={item}
+//                             className="rounded-xl border border-gray-100 bg-gray-50 p-4"
+//                         >
+//                             <p className="text-sm text-gray-700">
+//                                 {item}
+//                             </p>
+//                         </div>
+//                     ))}
+//                 </div>
+//             </section>
+//             {/* Children */}
+//             <section id="children" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     8. Children&apos;s Privacy
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     AgroNexa is not intended to knowingly collect personal
+//                     information from children where such collection is
+//                     prohibited by applicable law. If you believe a child has
+//                     provided personal information to us, please contact us.
+//                 </p>
+//             </section>
+//             {/* Updates */}
+//             <section id="updates" className="scroll-mt-24">
+//                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+//                     9. Policy Updates
+//                 </h2>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     We may update this Privacy Policy from time to time to
+//                     reflect changes to our services, technology, or legal
+//                     requirements.
+//                 </p>
+//                 <p className="mt-4 leading-7 text-gray-600">
+//                     When we make changes, we will update the effective date
+//                     displayed at the beginning of this policy.
+//                 </p>
+//             </section>
+//             {/* Contact */}
+//             <section id="contact" className="scroll-mt-24">
+//                 <div className="rounded-2xl bg-green-600 p-7 text-white sm:p-8">
+//                     <h2 className="text-2xl font-bold">
+//                         10. Contact Us
+//                     </h2>
+//                     <p className="mt-3 leading-7 text-green-50">
+//                         If you have questions, concerns, or requests regarding
+//                         this Privacy Policy, please contact the AgroNexa team.
+//                     </p>
+//                     <div className="mt-6 space-y-2 text-sm">
+//                         <p>
+//                             <strong>Email:</strong>{" "}
+//                             support@agronexa.com
+//                         </p>
+//                         <p>
+//                             <strong>Location:</strong>{" "}
+//                             Dhaka, Bangladesh
+//                         </p>
+//                     </div>
+//                 </div>
+//             </section>
+//         </article>
+//     );
+// };
+//
+// export default PrivacyContent;
+
 import { CheckCircle2, Info } from "lucide-react";
+
 const PrivacyContent = () => {
+    const headingClass = "text-2xl font-bold text-gray-900 transition-colors duration-300 dark:text-white sm:text-3xl";
+    const paragraphClass = "mt-4 leading-7 text-gray-600 transition-colors duration-300 dark:text-slate-300";
+    const subheadingClass = "font-bold text-gray-900 transition-colors duration-300 dark:text-slate-100";
+    const listItemClass = "flex items-start gap-3 text-gray-600 transition-colors duration-300 dark:text-slate-300";
+    const usageItems = [
+        "Creating and managing user accounts",
+        "Providing marketplace and platform services",
+        "Processing and managing user requests",
+        "Improving our website and user experience",
+        "Communicating with users about services",
+        "Detecting fraud, abuse, and security issues",
+        "Maintaining and improving platform performance",
+        "Complying with applicable legal requirements",
+    ];
+    const privacyRights = [
+        "Access your personal information",
+        "Correct inaccurate information",
+        "Request deletion of certain information",
+        "Withdraw certain permissions",
+        "Ask questions about our data practices",
+        "Submit privacy-related requests",
+    ];
+
     return (
-        <article className="min-w-0 space-y-14">
-            {/* Introduction */}
+        <article className="min-w-0 space-y-14 text-slate-900 transition-colors duration-300 dark:text-slate-100">
+            {/* 1. Introduction */}
             <section id="introduction" className="scroll-mt-24">
                 <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100">
-                        <Info className="h-5 w-5 text-green-600" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/30">
+                        <Info className="h-5 w-5 text-green-600 dark:text-green-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+
+                    <h2 className={headingClass}>
                         1. Introduction
                     </h2>
                 </div>
-                <div className="space-y-4 text-gray-600 leading-7">
+
+                <div className="space-y-4 leading-7 text-gray-600 dark:text-slate-300">
                     <p>
                         Welcome to AgroNexa. We respect your privacy and are
                         committed to protecting the personal information you
                         share with us.
                     </p>
+
                     <p>
                         This Privacy Policy explains how AgroNexa collects,
                         uses, stores, and protects information when you use
                         our website, marketplace, services, and related
                         features.
                     </p>
+
                     <p>
                         By using AgroNexa, you acknowledge that you have read
                         and understood this Privacy Policy.
                     </p>
                 </div>
             </section>
-            {/* Information */}
+
+            {/* 2. Information We Collect */}
             <section id="information" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     2. Information We Collect
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     Depending on how you use AgroNexa, we may collect
                     different types of information.
                 </p>
+
                 <div className="mt-6 space-y-6">
                     <div>
-                        <h3 className="font-bold text-gray-900">
+                        <h3 className={subheadingClass}>
                             Account Information
                         </h3>
-                        <p className="mt-2 leading-7 text-gray-600">
+                        <p className={paragraphClass}>
                             When you create an account, we may collect your
                             name, email address, phone number, password,
                             profile information, and account role.
                         </p>
                     </div>
+
                     <div>
-                        <h3 className="font-bold text-gray-900">
+                        <h3 className={subheadingClass}>
                             Marketplace Information
                         </h3>
-                        <p className="mt-2 leading-7 text-gray-600">
+                        <p className={paragraphClass}>
                             Farmers and sellers may provide information about
                             products, prices, quantities, categories, and
                             other marketplace details.
                         </p>
                     </div>
+
                     <div>
-                        <h3 className="font-bold text-gray-900">
+                        <h3 className={subheadingClass}>
                             Communication Information
                         </h3>
-                        <p className="mt-2 leading-7 text-gray-600">
+                        <p className={paragraphClass}>
                             If you contact us, we may keep the information
                             included in your message and our response.
                         </p>
                     </div>
+
                     <div>
-                        <h3 className="font-bold text-gray-900">
+                        <h3 className={subheadingClass}>
                             Technical Information
                         </h3>
-                        <p className="mt-2 leading-7 text-gray-600">
+                        <p className={paragraphClass}>
                             We may automatically receive information such as
                             browser type, device information, IP address,
                             pages visited, and general usage information.
@@ -81,51 +369,45 @@ const PrivacyContent = () => {
                     </div>
                 </div>
             </section>
-            {/* Usage */}
+
+            {/* 3. How We Use Information */}
             <section id="usage" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     3. How We Use Information
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     We may use collected information for purposes including:
                 </p>
-                <ul className="mt-6 space-y-3">
-                    {[
-                        "Creating and managing user accounts",
-                        "Providing marketplace and platform services",
-                        "Processing and managing user requests",
-                        "Improving our website and user experience",
-                        "Communicating with users about services",
-                        "Detecting fraud, abuse, and security issues",
-                        "Maintaining and improving platform performance",
-                        "Complying with applicable legal requirements",
-                    ].map((item) => (
-                        <li
-                            key={item}
-                            className="flex items-start gap-3 text-gray-600"
-                        >
-                            <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-green-600" />
 
+                <ul className="mt-6 space-y-3">
+                    {usageItems.map((item) => (
+                        <li key={item} className={listItemClass}>
+                            <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-green-600 dark:text-green-400" />
                             <span>{item}</span>
                         </li>
                     ))}
                 </ul>
             </section>
-            {/* Sharing */}
+
+            {/* 4. Information Sharing */}
             <section id="sharing" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     4. Information Sharing
                 </h2>
-                <div className="mt-4 space-y-4 leading-7 text-gray-600">
+
+                <div className="mt-4 space-y-4 leading-7 text-gray-600 dark:text-slate-300">
                     <p>
                         We do not sell your personal information as part of
                         our ordinary business operations.
                     </p>
+
                     <p>
                         We may share information with trusted service
                         providers when necessary to operate, maintain, or
                         improve our services.
                     </p>
+
                     <p>
                         We may also disclose information when required by law,
                         to protect our rights, prevent fraud, or protect the
@@ -133,112 +415,129 @@ const PrivacyContent = () => {
                     </p>
                 </div>
             </section>
-            {/* Security */}
+
+            {/* 5. Data Security */}
             <section id="security" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     5. Data Security
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     We use reasonable technical and organizational measures
                     designed to protect personal information against
                     unauthorized access, alteration, disclosure, or
                     destruction.
                 </p>
-                <div className="mt-6 rounded-2xl border border-green-100 bg-green-50 p-5">
-                    <p className="text-sm leading-6 text-green-800">
+
+                <div className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-5 transition-colors duration-300 dark:border-green-900/60 dark:bg-green-950/30">
+                    <p className="text-sm leading-6 text-green-800 dark:text-green-300">
                         <strong>Important:</strong> No online service can
                         guarantee absolute security. We continuously work to
                         improve the security of our platform and systems.
                     </p>
                 </div>
             </section>
-            {/* Cookies */}
+
+            {/* 6. Cookies */}
             <section id="cookies" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     6. Cookies
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     AgroNexa may use cookies and similar technologies to
                     remember preferences, maintain sessions, understand
                     platform usage, and improve the overall user experience.
                 </p>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     You may configure your browser to refuse or limit
                     cookies. However, some features of the platform may not
                     function correctly without certain cookies.
                 </p>
             </section>
-            {/* Rights */}
+
+            {/* 7. Your Privacy Rights */}
             <section id="rights" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     7. Your Privacy Rights
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     Depending on applicable laws, you may have rights
                     regarding your personal information.
                 </p>
+
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {[
-                        "Access your personal information",
-                        "Correct inaccurate information",
-                        "Request deletion of certain information",
-                        "Withdraw certain permissions",
-                        "Ask questions about our data practices",
-                        "Submit privacy-related requests",
-                    ].map((item) => (
+                    {privacyRights.map((item) => (
                         <div
                             key={item}
-                            className="rounded-xl border border-gray-100 bg-gray-50 p-4"
+                            className="
+                                rounded-xl border border-gray-200
+                                bg-gray-50 p-4
+                                transition-colors duration-300
+                                dark:border-slate-700
+                                dark:bg-slate-900
+                            "
                         >
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-gray-700 dark:text-slate-300">
                                 {item}
                             </p>
                         </div>
                     ))}
                 </div>
             </section>
-            {/* Children */}
+
+            {/* 8. Children's Privacy */}
             <section id="children" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     8. Children&apos;s Privacy
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     AgroNexa is not intended to knowingly collect personal
                     information from children where such collection is
                     prohibited by applicable law. If you believe a child has
                     provided personal information to us, please contact us.
                 </p>
             </section>
-            {/* Updates */}
+
+            {/* 9. Policy Updates */}
             <section id="updates" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className={headingClass}>
                     9. Policy Updates
                 </h2>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     We may update this Privacy Policy from time to time to
                     reflect changes to our services, technology, or legal
                     requirements.
                 </p>
-                <p className="mt-4 leading-7 text-gray-600">
+
+                <p className={paragraphClass}>
                     When we make changes, we will update the effective date
                     displayed at the beginning of this policy.
                 </p>
             </section>
-            {/* Contact */}
+
+            {/* 10. Contact Us */}
             <section id="contact" className="scroll-mt-24">
-                <div className="rounded-2xl bg-green-600 p-7 text-white sm:p-8">
+                <div className="rounded-2xl border border-green-700/20 bg-green-600 p-7 text-white shadow-sm transition-colors duration-300 dark:border-green-500/20 dark:bg-green-800 sm:p-8">
                     <h2 className="text-2xl font-bold">
                         10. Contact Us
                     </h2>
+
                     <p className="mt-3 leading-7 text-green-50">
                         If you have questions, concerns, or requests regarding
                         this Privacy Policy, please contact the AgroNexa team.
                     </p>
-                    <div className="mt-6 space-y-2 text-sm">
+
+                    <div className="mt-6 space-y-2 text-sm text-white">
                         <p>
                             <strong>Email:</strong>{" "}
                             support@agronexa.com
                         </p>
+
                         <p>
                             <strong>Location:</strong>{" "}
                             Dhaka, Bangladesh

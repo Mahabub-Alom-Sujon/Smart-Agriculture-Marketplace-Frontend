@@ -1,84 +1,190 @@
+// import Image from "next/image";
+// import {
+//     CheckCircle2,
+//     Leaf,
+//     Target,
+// } from "lucide-react";
+//
+// const AboutMission = () => {
+//     return (
+//         <section className="bg-gray-50 py-20 lg:py-28">
+//             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+//                 <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+//                     {/* Images */}
+//                     <div className="relative">
+//                         <div className="overflow-hidden rounded-3xl">
+//                             <Image
+//                                 src="https://images.unsplash.com/photo-1492496913980-501348b61469"
+//                                 alt="Modern agriculture"
+//                                 width={700}
+//                                 height={600}
+//                                 className="h-[500px] w-full object-cover"
+//                             />
+//                         </div>
+//
+//                         <div className="absolute -bottom-8 -right-4 max-w-xs rounded-2xl border bg-white p-5 shadow-xl sm:-right-8">
+//                             <div className="flex gap-4">
+//                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100">
+//                                     <Target className="h-6 w-6 text-green-600" />
+//                                 </div>
+//                                 <div>
+//                                     <h4 className="font-bold text-gray-900">Our Mission</h4>
+//                                     <p className="mt-1 text-sm leading-6 text-gray-500">
+//                                         Making agriculture more connected,
+//                                         transparent, and accessible.
+//                                     </p>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+//                     {/* Content */}
+//                     <div>
+//                         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-green-600">
+//                             <Leaf className="h-5 w-5" />
+//                             About AgroNexa
+//                         </div>
+//                         <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
+//                             Technology that brings agriculture closer to people
+//                         </h2>
+//                         <p className="mt-6 leading-7 text-gray-600">
+//                             Agriculture is more than an industry. It is the
+//                             foundation of our communities and our everyday
+//                             lives. We believe technology can make the journey
+//                             from farm to customer simpler and more transparent.
+//                         </p>
+//                         <p className="mt-4 leading-7 text-gray-600">
+//                             AgroNexa creates a digital ecosystem where farmers
+//                             can showcase their products, buyers can discover
+//                             fresh produce, and agricultural experts can share
+//                             valuable knowledge.
+//                         </p>
+//                         <div className="mt-8 space-y-4">
+//                             {[
+//                                 "Direct connection between farmers and buyers",
+//                                 "Easy product discovery and marketplace access",
+//                                 "Access to agricultural experts and services",
+//                                 "Transparent and user-friendly experience",
+//                             ].map((item) => (
+//                                 <div
+//                                     key={item}
+//                                     className="flex items-start gap-3"
+//                                 >
+//                                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+//                                     <span className="text-gray-700">{item}</span>
+//                                 </div>
+//                             ))}
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// };
+//
+// export default AboutMission;
+
+
 import Image from "next/image";
 import {
-    CheckCircle2,
-    Leaf,
-    Target,
+  CheckCircle2,
+  Leaf,
+  Target,
 } from "lucide-react";
 
-const AboutMission = () => {
-    return (
-        <section className="bg-gray-50 py-20 lg:py-28">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-                    {/* Images */}
-                    <div className="relative">
-                        <div className="overflow-hidden rounded-3xl">
-                            <Image
-                                src="https://images.unsplash.com/photo-1492496913980-501348b61469"
-                                alt="Modern agriculture"
-                                width={700}
-                                height={600}
-                                className="h-[500px] w-full object-cover"
-                            />
-                        </div>
+const missionPoints = [
+  "Direct connection between farmers and buyers",
+  "Easy product discovery and marketplace access",
+  "Access to agricultural experts and services",
+  "Transparent and user-friendly experience",
+];
 
-                        <div className="absolute -bottom-8 -right-4 max-w-xs rounded-2xl border bg-white p-5 shadow-xl sm:-right-8">
-                            <div className="flex gap-4">
-                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100">
-                                    <Target className="h-6 w-6 text-green-600" />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900">Our Mission</h4>
-                                    <p className="mt-1 text-sm leading-6 text-gray-500">
-                                        Making agriculture more connected,
-                                        transparent, and accessible.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Content */}
-                    <div>
-                        <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-green-600">
-                            <Leaf className="h-5 w-5" />
-                            About AgroNexa
-                        </div>
-                        <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-                            Technology that brings agriculture closer to people
-                        </h2>
-                        <p className="mt-6 leading-7 text-gray-600">
-                            Agriculture is more than an industry. It is the
-                            foundation of our communities and our everyday
-                            lives. We believe technology can make the journey
-                            from farm to customer simpler and more transparent.
-                        </p>
-                        <p className="mt-4 leading-7 text-gray-600">
-                            AgroNexa creates a digital ecosystem where farmers
-                            can showcase their products, buyers can discover
-                            fresh produce, and agricultural experts can share
-                            valuable knowledge.
-                        </p>
-                        <div className="mt-8 space-y-4">
-                            {[
-                                "Direct connection between farmers and buyers",
-                                "Easy product discovery and marketplace access",
-                                "Access to agricultural experts and services",
-                                "Transparent and user-friendly experience",
-                            ].map((item) => (
-                                <div
-                                    key={item}
-                                    className="flex items-start gap-3"
-                                >
-                                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
-                                    <span className="text-gray-700">{item}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+const AboutMission = () => {
+  return (
+    <section className="bg-gray-50 py-20 text-slate-900 transition-colors duration-300 sm:py-24 lg:py-28 dark:bg-slate-950 dark:text-slate-100">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          {/* Images */}
+          <div className="relative pb-8 sm:pb-10">
+            <div className="overflow-hidden rounded-3xl shadow-xl shadow-slate-900/10 dark:shadow-black/30">
+              <Image
+                src="https://images.unsplash.com/photo-1492496913980-501348b61469"
+                alt="Modern agriculture and green crops"
+                width={700}
+                height={600}
+                className="h-[380px] w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-[500px]"
+              />
             </div>
-        </section>
-    );
+
+            {/* Floating Mission Card */}
+            <div className="absolute -bottom-1 right-2 max-w-xs rounded-2xl border border-slate-200 bg-white p-5 shadow-xl transition-colors duration-300 sm:-right-6 sm:bottom-0 dark:border-slate-700 dark:bg-slate-900">
+              <div className="flex gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-950">
+                  <Target className="h-6 w-6 text-green-600 dark:text-green-400" />
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-slate-900 dark:text-slate-100">
+                    Our Mission
+                  </h4>
+
+                  <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                    Making agriculture more connected, transparent, and
+                    accessible.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="mt-2 lg:mt-0">
+            {/* Section Label */}
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2 text-sm font-semibold text-green-700 transition-colors duration-300 dark:border-green-800 dark:bg-green-950/50 dark:text-green-400">
+              <Leaf className="h-5 w-5" />
+              About AgroNexa
+            </div>
+
+            {/* Heading */}
+            <h2 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 transition-colors duration-300 sm:text-4xl dark:text-white">
+              Technology that brings agriculture closer to people
+            </h2>
+
+            {/* Description */}
+            <p className="mt-6 leading-7 text-slate-600 transition-colors duration-300 dark:text-slate-400">
+              Agriculture is more than an industry. It is the foundation of
+              our communities and our everyday lives. We believe technology
+              can make the journey from farm to customer simpler and more
+              transparent.
+            </p>
+
+            <p className="mt-4 leading-7 text-slate-600 transition-colors duration-300 dark:text-slate-400">
+              AgroNexa creates a digital ecosystem where farmers can showcase
+              their products, buyers can discover fresh produce, and
+              agricultural experts can share valuable knowledge.
+            </p>
+
+            {/* Mission Points */}
+            <div className="mt-8 space-y-4">
+              {missionPoints.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-start gap-3"
+                >
+                  <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-950">
+                    <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  </div>
+
+                  <span className="leading-6 text-slate-700 dark:text-slate-300">
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default AboutMission;

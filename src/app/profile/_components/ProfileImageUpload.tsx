@@ -13,14 +13,13 @@ interface ProfileImageUploadProps {
 }
 
 export default function ProfileImageUpload({
-                                               name,
-                                               imageUrl,
-                                               onUploaded,
-                                           }: ProfileImageUploadProps) {
+   name,
+   imageUrl,
+   onUploaded,
+}: ProfileImageUploadProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [uploading, setUploading] = useState(false);
     const [preview, setPreview] = useState(imageUrl);
-
     // parent component থেকে imageUrl পরিবর্তন হলে যেন preview ও আপডেট হয়
     useEffect(() => {
         setPreview(imageUrl);

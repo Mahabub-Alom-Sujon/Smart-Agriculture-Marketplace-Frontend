@@ -31,10 +31,11 @@ interface UpdateProductFormProps {
     categories: CategoryOption[];
     farmers: FarmerOption[];
 }
+
 const UpdateProductForm = ({
     product,
     categories,
-    farmers,
+   farmers,
 }: UpdateProductFormProps) => {
     const router = useRouter();
     const {
@@ -61,19 +62,20 @@ const UpdateProductForm = ({
         },
     });
 
-    // Reset the form when the selected product changes.
+    const getProductValues = (): ProductFormValues => ({
+        name: product.name,
+        description: product.description ?? "",
+        price: product.price,
+        quantity: product.quantity,
+        unit: product.unit,
+        image: product.image ?? "",
+        status: product.status,
+        categoryId: product.categoryId,
+        farmerId: product.farmerId,
+    });
+
     useEffect(() => {
-        reset({
-            name: product.name,
-            description: product.description ?? "",
-            price: product.price,
-            quantity: product.quantity,
-            unit: product.unit,
-            image: product.image ?? "",
-            status: product.status,
-            categoryId: product.categoryId,
-            farmerId: product.farmerId,
-        });
+        reset(getProductValues());
     }, [product, reset]);
 
     const onSubmit = async (data: ProductValidatedValues) => {
@@ -96,42 +98,69 @@ const UpdateProductForm = ({
                 );
                 return;
             }
+
             toast.success(
                 result.message || "Product updated successfully!"
             );
+
             router.push("/dashboard/admin/products");
             router.refresh();
         } catch (error: unknown) {
             const message =
-                error instanceof Error ? error.message : "Something went wrong while updating the product.";
+                error instanceof Error
+                    ? error.message
+                    : "Something went wrong while updating the product.";
 
             toast.error(message);
         }
     };
 
     const inputClass = (hasError: boolean) =>
-        `h-12 w-full rounded-lg border bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:ring-4 ${
-    hasError
-        ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
-        : "border-slate-200 focus:border-emerald-500 focus:ring-green-500/10"
-}`;
+        `h-12 w-full rounded-lg border bg-white px-4 text-sm text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 focus:ring-4 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 ${
+            hasError
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/60"
+                : "border-slate-200 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700 dark:focus:border-emerald-500"
+        }`;
 
-    const labelClass = "block text-sm font-medium text-slate-700";
+    const textareaClass = (hasError: boolean) =>
+        `w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 focus:ring-4 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 ${
+            hasError
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/60"
+                : "border-slate-200 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700 dark:focus:border-emerald-500"
+        }`;
+
+    const labelClass =
+        "block text-sm font-medium text-slate-700 dark:text-slate-300";
+
+    const sectionTitleClass =
+        "text-lg font-semibold text-slate-900 dark:text-white";
+
+    const sectionDescriptionClass =
+        "mt-1 text-sm text-slate-500 dark:text-slate-400";
+
+    const errorClass =
+        "text-xs font-medium text-red-500 dark:text-red-400";
+
+    const secondaryButtonClass =
+        "inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-500/10 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-400/10";
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-8"
+        >
             {/* Basic Information */}
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-green-600">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400">
                         <Package className="h-5 w-5" />
                     </div>
 
                     <div>
-                        <h2 className="text-lg font-semibold text-slate-900">
+                        <h2 className={sectionTitleClass}>
                             Basic Information
                         </h2>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-slate-500 dark:text-slate-400">
                             Update your product details.
                         </p>
                     </div>
@@ -148,11 +177,12 @@ const UpdateProductForm = ({
                         type="text"
                         placeholder="e.g. Fresh Organic Tomatoes"
                         {...register("name")}
+                        aria-invalid={!!errors.name}
                         className={inputClass(!!errors.name)}
                     />
 
                     {errors.name && (
-                        <p className="text-xs font-medium text-red-500">
+                        <p className={errorClass}>
                             {errors.name.message}
                         </p>
                     )}
@@ -160,7 +190,10 @@ const UpdateProductForm = ({
 
                 {/* Description */}
                 <div className="space-y-2">
-                    <label htmlFor="description" className={labelClass}>
+                    <label
+                        htmlFor="description"
+                        className={labelClass}
+                    >
                         Description
                     </label>
 
@@ -169,15 +202,14 @@ const UpdateProductForm = ({
                         rows={5}
                         placeholder="Describe the product, its quality, and freshness..."
                         {...register("description")}
-                        className={`w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:ring-4 ${
-    errors.description
-        ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
-        : "border-slate-200 focus:border-green-500 focus:ring-green-500/10"
-}`}
+                        aria-invalid={!!errors.description}
+                        className={textareaClass(
+                            !!errors.description
+                        )}
                     />
 
                     {errors.description && (
-                        <p className="text-xs font-medium text-red-500">
+                        <p className={errorClass}>
                             {errors.description.message}
                         </p>
                     )}
@@ -187,10 +219,11 @@ const UpdateProductForm = ({
             {/* Pricing and Inventory */}
             <section className="space-y-6">
                 <div>
-                    <h2 className="text-lg font-semibold text-slate-900">
-                        Pricing & Inventory
+                    <h2 className={sectionTitleClass}>
+                        Pricing &amp; Inventory
                     </h2>
-                    <p className="mt-1 text-sm text-slate-500">
+
+                    <p className={sectionDescriptionClass}>
                         Update the price and available quantity.
                     </p>
                 </div>
@@ -210,11 +243,12 @@ const UpdateProductForm = ({
                             {...register("price", {
                                 valueAsNumber: true,
                             })}
+                            aria-invalid={!!errors.price}
                             className={inputClass(!!errors.price)}
                         />
 
                         {errors.price && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.price.message}
                             </p>
                         )}
@@ -222,7 +256,10 @@ const UpdateProductForm = ({
 
                     {/* Quantity */}
                     <div className="space-y-2">
-                        <label htmlFor="quantity" className={labelClass}>
+                        <label
+                            htmlFor="quantity"
+                            className={labelClass}
+                        >
                             Quantity <span className="text-red-500">*</span>
                         </label>
 
@@ -234,11 +271,12 @@ const UpdateProductForm = ({
                             {...register("quantity", {
                                 valueAsNumber: true,
                             })}
+                            aria-invalid={!!errors.quantity}
                             className={inputClass(!!errors.quantity)}
                         />
 
                         {errors.quantity && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.quantity.message}
                             </p>
                         )}
@@ -253,6 +291,7 @@ const UpdateProductForm = ({
                         <select
                             id="unit"
                             {...register("unit")}
+                            aria-invalid={!!errors.unit}
                             className={inputClass(!!errors.unit)}
                         >
                             <option value="KG">Kilogram (KG)</option>
@@ -265,7 +304,7 @@ const UpdateProductForm = ({
                         </select>
 
                         {errors.unit && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.unit.message}
                             </p>
                         )}
@@ -280,6 +319,7 @@ const UpdateProductForm = ({
                         <select
                             id="status"
                             {...register("status")}
+                            aria-invalid={!!errors.status}
                             className={inputClass(!!errors.status)}
                         >
                             <option value="ACTIVE">Active</option>
@@ -288,7 +328,7 @@ const UpdateProductForm = ({
                         </select>
 
                         {errors.status && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.status.message}
                             </p>
                         )}
@@ -297,18 +337,34 @@ const UpdateProductForm = ({
             </section>
 
             {/* Category and Farmer */}
-            <section className="mt-3 space-y-6">
+            <section className="space-y-6">
+                <div>
+                    <h2 className={sectionTitleClass}>
+                        Product Assignment
+                    </h2>
+
+                    <p className={sectionDescriptionClass}>
+                        Select the category and farmer for this product.
+                    </p>
+                </div>
+
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     {/* Category */}
                     <div className="space-y-2">
-                        <label htmlFor="categoryId" className={labelClass}>
+                        <label
+                            htmlFor="categoryId"
+                            className={labelClass}
+                        >
                             Category <span className="text-red-500">*</span>
                         </label>
 
                         <select
                             id="categoryId"
                             {...register("categoryId")}
-                            className={inputClass(!!errors.categoryId)}
+                            aria-invalid={!!errors.categoryId}
+                            className={inputClass(
+                                !!errors.categoryId
+                            )}
                         >
                             <option value="">Select category</option>
 
@@ -323,13 +379,13 @@ const UpdateProductForm = ({
                         </select>
 
                         {errors.categoryId && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.categoryId.message}
                             </p>
                         )}
 
                         {categories.length === 0 && (
-                            <p className="text-xs text-amber-600">
+                            <p className="text-xs text-amber-600 dark:text-amber-400">
                                 No categories available.
                             </p>
                         )}
@@ -337,32 +393,39 @@ const UpdateProductForm = ({
 
                     {/* Farmer */}
                     <div className="space-y-2">
-                        <label htmlFor="farmerId" className={labelClass}>
+                        <label
+                            htmlFor="farmerId"
+                            className={labelClass}
+                        >
                             Farmer <span className="text-red-500">*</span>
                         </label>
 
                         <select
                             id="farmerId"
                             {...register("farmerId")}
+                            aria-invalid={!!errors.farmerId}
                             className={inputClass(!!errors.farmerId)}
                         >
                             <option value="">Select farmer</option>
 
                             {farmers.map((farmer) => (
-                                <option key={farmer.id} value={farmer.id}>
+                                <option
+                                    key={farmer.id}
+                                    value={farmer.id}
+                                >
                                     {farmer.name}
                                 </option>
                             ))}
                         </select>
 
                         {errors.farmerId && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.farmerId.message}
                             </p>
                         )}
 
                         {farmers.length === 0 && (
-                            <p className="text-xs text-amber-600">
+                            <p className="text-xs text-amber-600 dark:text-amber-400">
                                 No farmers available.
                             </p>
                         )}
@@ -381,52 +444,49 @@ const UpdateProductForm = ({
                     type="url"
                     placeholder="https://example.com/product.jpg"
                     {...register("image")}
+                    aria-invalid={!!errors.image}
                     className={inputClass(!!errors.image)}
                 />
 
                 {errors.image && (
-                    <p className="text-xs font-medium text-red-500">
+                    <p className={errorClass}>
                         {errors.image.message}
                     </p>
                 )}
+
+                <p className="text-xs text-slate-400 dark:text-slate-500">
+                    Provide a valid URL for the product image.
+                </p>
             </section>
 
             {/* Actions */}
-            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
                 <Link
                     href="/dashboard/admin/products"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                    className={secondaryButtonClass}
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back to Products
                 </Link>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     <button
                         type="button"
                         disabled={isSubmitting}
-                        onClick={() =>
-                            reset({
-                                name: product.name,
-                                description: product.description ?? "",
-                                price: product.price,
-                                quantity: product.quantity,
-                                unit: product.unit,
-                                image: product.image ?? "",
-                                status: product.status,
-                                categoryId: product.categoryId,
-                                farmerId: product.farmerId,
-                            })
-                        }
-                        className="h-11 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                        onClick={() => reset(getProductValues())}
+                        className={secondaryButtonClass}
                     >
                         Reset
                     </button>
 
                     <button
                         type="submit"
-                        disabled={isSubmitting || categories.length === 0 || farmers.length === 0}
-                        className="inline-flex h-11 min-w-[160px] items-center justify-center gap-2 rounded-lg bg-green-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+                        disabled={
+                            isSubmitting ||
+                            categories.length === 0 ||
+                            farmers.length === 0
+                        }
+                        className="inline-flex h-11 min-w-[160px] items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/30 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                     >
                         {isSubmitting ? (
                             <>

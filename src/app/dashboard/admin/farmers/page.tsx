@@ -1,6 +1,5 @@
 import { getAllFarmer } from "./_actions/getAllFarmer";
 import FarmerPage from "@/app/dashboard/admin/farmers/_components/FarmerPage";
-
 interface FarmerRouteProps {
     searchParams: Promise<{
         page?: string;
@@ -8,7 +7,6 @@ interface FarmerRouteProps {
         searchTerm?: string;
     }>;
 }
-
 export default async function FarmerRoute({
     searchParams,
 }: FarmerRouteProps) {
@@ -29,10 +27,14 @@ export default async function FarmerRoute({
         totalPage: 0,
     };
     return (
-        <FarmerPage
-            farmer={farmer}
-            meta={meta}
-            searchTerm={searchTerm}
-        />
+        <main className="min-h-screen bg-slate-50 transition-colors duration-300 dark:bg-slate-950">
+            <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+                <FarmerPage
+                    farmer={farmer}
+                    meta={meta}
+                    searchTerm={searchTerm}
+                />
+            </div>
+        </main>
     );
 }

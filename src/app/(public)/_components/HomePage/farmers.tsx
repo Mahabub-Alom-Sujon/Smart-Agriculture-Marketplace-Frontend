@@ -9,40 +9,41 @@ import {
 } from "lucide-react";
 import moment from "moment";
 import type { Farmer } from "@/types/types.farmer";
-
 interface FarmersProps {
     farmers: Farmer[];
 }
-
 export default function Farmers({ farmers }: FarmersProps) {
     if (!farmers.length) {
         return (
-            <div className="rounded-2xl border border-dashed border-slate-300 p-10 text-center">
-                <Sprout className="mx-auto mb-3 h-10 w-10 text-green-600" />
-                <h3 className="text-lg font-semibold text-slate-800">
+            <div className="mt-10 rounded-2xl border border-dashed border-slate-300 bg-white/70 p-10 text-center transition-colors duration-300 dark:border-slate-700 dark:bg-slate-900/70">
+                <Sprout className="mx-auto mb-3 h-10 w-10 text-green-600 dark:text-green-400" />
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                     No Farmers Found
                 </h3>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                     There are no registered farmers to display.
                 </p>
             </div>
         );
     }
-
     return (
-        <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 mt-10">
+        <section className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {farmers.map((farmer) => {
                 const farms = farmer.farms ?? [];
                 const totalLand = farms.reduce(
-                    (total, farm) => total + (Number(farm.landSize) || 0), 0);
+                    (total, farm) => total + (Number(farm.landSize) || 0),
+                    0
+                );
                 const locations = Array.from(
-                    new Set( farms.map((farm) => farm.location).filter((location): location is string => Boolean(location)))
+                    new Set(
+                        farms.map((farm) => farm.location).filter((location): location is string => Boolean(location))
+                    )
                 );
                 const initial = farmer.name?.trim().charAt(0).toUpperCase() || "F";
                 return (
                     <article
                         key={farmer.id}
-                        className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl hover:shadow-green-900/5"
+                        className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-xl hover:shadow-green-900/5 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20 dark:hover:border-green-800 dark:hover:shadow-black/30"
                     >
                         {/* Top Accent */}
                         <div className="h-1 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500" />
@@ -50,79 +51,82 @@ export default function Farmers({ farmers }: FarmersProps) {
                         <div className="px-5 pt-5">
                             <div className="flex items-start justify-between gap-3">
                                 <div className="flex min-w-0 items-center gap-3">
+                                    {/* Avatar */}
                                     <div className="relative shrink-0">
-                                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 text-xl font-bold text-green-700 ring-4 ring-green-50">
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 text-xl font-bold text-green-700 ring-4 ring-green-50 transition-colors duration-300 dark:from-green-950 dark:to-emerald-950 dark:text-green-300 dark:ring-slate-800">
                                             {initial}
                                         </div>
-                                        <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500" />
+
+                                        <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500 dark:border-slate-900" />
                                     </div>
+                                    {/* Farmer Info */}
                                     <div className="min-w-0">
-                                        <h3 className="truncate text-lg font-bold text-slate-900 transition-colors group-hover:text-green-700">
+                                        <h3 className="truncate text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-green-700 dark:text-slate-100 dark:group-hover:text-green-400">
                                             {farmer.name}
                                         </h3>
-                                        <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs text-slate-500">
-                                            <Mail className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                                        <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                                            <Mail className="h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-500" />
                                             <span className="truncate">{farmer.email}</span>
                                         </div>
                                     </div>
                                 </div>
+                                {/* Certification */}
                                 {farmer.certification ? (
-                                    <div className="flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1.5 text-[10px] font-semibold text-amber-700">
+                                    <div className="flex shrink-0 items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1.5 text-[10px] font-semibold text-amber-700 dark:border-amber-800/60 dark:bg-amber-950/40 dark:text-amber-400">
                                         <Award className="h-3.5 w-3.5" />
                                         Certified
                                     </div>
                                 ) : (
-                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-colors group-hover:bg-green-50 group-hover:text-green-600">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-colors duration-300 group-hover:bg-green-50 group-hover:text-green-600 dark:bg-slate-800 dark:text-slate-500 dark:group-hover:bg-green-950 dark:group-hover:text-green-400">
                                         <ArrowUpRight className="h-4 w-4" />
                                     </div>
                                 )}
                             </div>
                         </div>
-
                         {/* Locations */}
-                        <div className="mx-5 mt-5 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3.5 py-3 transition-colors group-hover:border-green-100 group-hover:bg-green-50/50">
-                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-green-600 shadow-sm">
+                        <div className="mx-5 mt-5 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3.5 py-3 transition-colors duration-300 group-hover:border-green-100 group-hover:bg-green-50/50 dark:border-slate-800 dark:bg-slate-800/60 dark:group-hover:border-green-900 dark:group-hover:bg-green-950/20">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-green-600 shadow-sm dark:bg-slate-900 dark:text-green-400">
                                 <MapPin className="h-4 w-4" />
                             </div>
                             <div className="min-w-0">
-                                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                                     Location
                                 </p>
-                                <p className="mt-0.5 truncate text-sm font-medium text-slate-700">
-                                    {locations.length > 0 ? locations.join(" • ") : "Location not available"}
+                                <p className="mt-0.5 truncate text-sm font-medium text-slate-700 dark:text-slate-300">
+                                    {locations.length > 0
+                                        ? locations.join(" • ")
+                                        : "Location not available"}
                                 </p>
                             </div>
                         </div>
-
                         {/* Statistics */}
-                        <div className="mx-5 mt-4 grid grid-cols-2 overflow-hidden rounded-xl border border-slate-100">
-                            <div className="border-r border-slate-100 px-4 py-3.5">
+                        <div className="mx-5 mt-4 grid grid-cols-2 overflow-hidden rounded-xl border border-slate-100 dark:border-slate-800">
+                            <div className="border-r border-slate-100 px-4 py-3.5 dark:border-slate-800">
                                 <div className="flex items-center gap-2">
-                                    <Sprout className="h-4 w-4 text-green-600" />
-                                    <span className="text-xs font-medium text-slate-500">
+                                    <Sprout className="h-4 w-4 text-green-600 dark:text-green-400" />
+                                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                                         Farms
-                                     </span>
+                                    </span>
                                 </div>
-                                <p className="mt-1.5 text-xl font-bold text-slate-900">
+                                <p className="mt-1.5 text-xl font-bold text-slate-900 dark:text-slate-100">
                                     {farms.length}
                                 </p>
                             </div>
                             <div className="px-4 py-3.5">
                                 <div className="flex items-center gap-2">
-                                    <MapPin className="h-4 w-4 text-emerald-600" />
-                                    <span className="text-xs font-medium text-slate-500">
+                                    <MapPin className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                                         Total Land
                                     </span>
                                 </div>
-                                <p className="mt-1.5 text-xl font-bold text-slate-900">
+                                <p className="mt-1.5 text-xl font-bold text-slate-900 dark:text-slate-100">
                                     {totalLand.toFixed(2)}
-                                    <span className="ml-1 text-xs font-medium text-slate-400">
+                                    <span className="ml-1 text-xs font-medium text-slate-400 dark:text-slate-500">
                                         acres
                                     </span>
                                 </p>
                             </div>
                         </div>
-
                         {/* Farm Tags */}
                         <div className="mx-5 mt-4">
                             {farms.length > 0 ? (
@@ -130,42 +134,43 @@ export default function Farmers({ farmers }: FarmersProps) {
                                     {farms.slice(0, 2).map((farm) => (
                                         <span
                                             key={farm.id}
-                                            className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2.5 py-1.5 text-[11px] font-medium text-green-700"
+                                            className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2.5 py-1.5 text-[11px] font-medium text-green-700 transition-colors duration-300 dark:border-green-900/70 dark:bg-green-950/40 dark:text-green-300"
                                         >
                                             <Sprout className="h-3 w-3 shrink-0" />
                                             <span className="truncate">{farm.farmName}</span>
                                         </span>
                                     ))}
                                     {farms.length > 2 && (
-                                        <span className="inline-flex items-center rounded-md border border-slate-100 bg-slate-50 px-2.5 py-1.5 text-[11px] font-medium text-slate-500">
+                                        <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-[11px] font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
                                             +{farms.length - 2} more
                                         </span>
                                     )}
                                 </div>
                             ) : (
-                                <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-400">
+                                <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-400 dark:bg-slate-800/70 dark:text-slate-500">
                                     No registered farms yet
                                 </div>
                             )}
                         </div>
                         {/* Footer */}
-                        <div className="mx-5 mt-5 flex items-center justify-between border-t border-slate-100 py-4">
-                            <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                        <div className="mx-5 mt-5 flex items-center justify-between border-t border-slate-100 py-4 dark:border-slate-800">
+                            <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
                                 <CalendarDays className="h-3.5 w-3.5" />
-                                Joined{" "}
-                                {farmer.createdAt ? moment(farmer.createdAt).format("MMM Do YY") : "N/A"}
+                                <span>
+                                    Joined{" "}
+                                    {farmer.createdAt ? moment(farmer.createdAt).format("MMM Do YY") : "N/A"}
+                                </span>
                             </div>
-                            <div className="flex items-center gap-1.5 text-xs font-medium text-green-600">
+                            <div className="flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400">
                                 <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                                 Active
                             </div>
                         </div>
-
                         {/* CTA */}
                         <div className="px-5 pb-5">
                             <Link
                                 href={`/farmers/${farmer.id}`}
-                                className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-green-600 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-700"
+                                className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-green-600 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:bg-green-600 dark:hover:bg-green-500 dark:focus-visible:ring-offset-slate-900"
                             >
                                 View Farmer
                                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

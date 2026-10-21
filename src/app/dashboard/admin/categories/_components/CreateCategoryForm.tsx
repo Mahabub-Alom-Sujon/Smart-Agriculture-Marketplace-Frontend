@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { createCategory } from "@/app/dashboard/admin/categories/_actions/createCategory";
 import {
     categorySchema,
-    type  CategoryFormInput,
+    type CategoryFormInput,
     type CategoryFormValues,
 } from "@/schemas/category.schema";
 export default function CreateCategoryForm() {
@@ -59,8 +59,11 @@ export default function CreateCategoryForm() {
             setSubmitting(false);
         }
     };
-    const inputClass = "mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-gray-50";
-    const labelClass = "flex items-center gap-2 text-sm font-semibold text-gray-800";
+    const inputClass = "mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500/10 dark:disabled:bg-slate-800";
+    const labelClass = "flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200";
+    const backButtonClass = "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 hover:text-emerald-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-emerald-400";
+    const errorClass = "mt-2 flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400";
+    const helperClass = "mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400";
     return (
         <div className="mx-auto w-full max-w-4xl space-y-6 pb-10">
             {/* Header */}
@@ -68,42 +71,39 @@ export default function CreateCategoryForm() {
                 <Link
                     href="/dashboard/admin/categories"
                     aria-label="Back to categories"
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 transition hover:bg-gray-50"
+                    className={backButtonClass}
                 >
                     <ArrowLeft size={19} />
                 </Link>
                 <div>
-                    <p className="text-sm font-medium text-green-600">
+                    <p className="text-sm font-medium text-green-600 dark:text-green-400">
                         Admin Dashboard
                     </p>
-                    <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+
+                    <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
                         Create New Category
                     </h1>
-                    <p className="mt-1 text-sm text-gray-500">
+
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                         Add a category to organize products in your
                         agricultural marketplace.
                     </p>
                 </div>
             </div>
-
             {/* Form */}
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
-                className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900"
             >
-                {/* Form heading */}
                 <div className="space-y-6 p-5 sm:p-8">
-                    {/* Category name */}
+                    {/* Category Name */}
                     <div>
                         <label
                             htmlFor="name"
                             className={labelClass}
                         >
-                            <Tags
-                                size={17}
-                                className="text-emerald-600"
-                            />
+                            <Tags size={17} className="text-emerald-600 dark:text-emerald-400"/>
                             Category Name
                             <span className="text-red-500">*</span>
                         </label>
@@ -116,9 +116,7 @@ export default function CreateCategoryForm() {
                             autoComplete="off"
                             disabled={submitting}
                             aria-invalid={Boolean(errors.name)}
-                            aria-describedby={
-                                errors.name ? "name-error" : undefined
-                            }
+                            aria-describedby={ errors.name ? "name-error" : undefined }
                             {...register("name")}
                             className={inputClass}
                         />
@@ -127,7 +125,7 @@ export default function CreateCategoryForm() {
                             <p
                                 id="name-error"
                                 role="alert"
-                                className="mt-2 flex items-center gap-1.5 text-sm text-red-600"
+                                className={errorClass}
                             >
                                 <AlertCircle
                                     size={15}
@@ -146,7 +144,7 @@ export default function CreateCategoryForm() {
                         >
                             <Plus
                                 size={17}
-                                className="text-emerald-600"
+                                className="text-emerald-600 dark:text-emerald-400"
                             />
                             Description
                         </label>
@@ -171,7 +169,7 @@ export default function CreateCategoryForm() {
                             <p
                                 id="description-error"
                                 role="alert"
-                                className="mt-2 flex items-center gap-1.5 text-sm text-red-600"
+                                className={errorClass}
                             >
                                 <AlertCircle
                                     size={15}
@@ -184,7 +182,7 @@ export default function CreateCategoryForm() {
                         ) : (
                             <p
                                 id="description-help"
-                                className="mt-2 text-xs leading-5 text-gray-400"
+                                className={helperClass}
                             >
                                 Provide a short description to help users
                                 understand this category.
@@ -192,7 +190,7 @@ export default function CreateCategoryForm() {
                         )}
                     </div>
 
-                    {/* Image URL */}
+                    {/* Category Image URL */}
                     <div>
                         <label
                             htmlFor="image"
@@ -200,7 +198,7 @@ export default function CreateCategoryForm() {
                         >
                             <ImagePlus
                                 size={17}
-                                className="text-emerald-600"
+                                className="text-emerald-600 dark:text-emerald-400"
                             />
                             Category Image URL
                         </label>
@@ -213,7 +211,7 @@ export default function CreateCategoryForm() {
                             autoComplete="url"
                             disabled={submitting}
                             aria-invalid={Boolean(errors.image)}
-                            aria-describedby={ errors.image ? "image-error" : "image-help" }
+                            aria-describedby={ errors.image ? "image-error" : "image-help"}
                             {...register("image")}
                             className={inputClass}
                         />
@@ -222,15 +220,18 @@ export default function CreateCategoryForm() {
                             <p
                                 id="image-error"
                                 role="alert"
-                                className="mt-2 flex items-center gap-1.5 text-sm text-red-600"
+                                className={errorClass}
                             >
-                                <AlertCircle size={15} className="shrink-0"/>
+                                <AlertCircle
+                                    size={15}
+                                    className="shrink-0"
+                                />
                                 <span>{errors.image.message}</span>
                             </p>
                         ) : (
                             <p
                                 id="image-help"
-                                className="mt-2 text-xs leading-5 text-gray-400"
+                                className={helperClass}
                             >
                                 Enter a publicly accessible image URL.
                                 This field is optional.
@@ -239,14 +240,15 @@ export default function CreateCategoryForm() {
                     </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex flex-col-reverse gap-3 border-t border-gray-100 bg-gray-50/60 px-5 py-5 sm:flex-row sm:justify-end sm:px-8">
+                {/* Form Actions */}
+                <div className="flex flex-col-reverse gap-3 border-t border-slate-200 bg-slate-50/80 px-5 py-5 dark:border-slate-700 dark:bg-slate-800/60 sm:flex-row sm:justify-end sm:px-8">
                     <Link
                         href="/dashboard/admin/categories"
                         aria-disabled={submitting}
-                        className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 ${
-                        submitting ? "pointer-events-none opacity-60" : ""
-                        }`}
+                        className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 ${
+                        submitting
+                        ? "pointer-events-none opacity-60" : ""
+                    }`}
                     >
                         Cancel
                     </Link>
@@ -254,7 +256,7 @@ export default function CreateCategoryForm() {
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-green-500 dark:hover:bg-green-600"
                     >
                         {submitting ? (
                             <>

@@ -210,7 +210,7 @@ export function LoginForm() {
                             <span className="w-full border-t" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                                <span className="bg-background px-3 text-muted-foreground">OR</span>
+                            <span className="bg-background px-3 text-muted-foreground">OR</span>
                         </div>
                     </div>
                     {/* Role Selection - Google Login Only */}

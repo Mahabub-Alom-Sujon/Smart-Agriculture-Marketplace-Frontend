@@ -15,6 +15,7 @@ import {
     type ProductValidatedValues,
 } from "@/schemas/product.schema";
 import { createProduct } from "@/app/dashboard/admin/products/_actions/createProduct";
+
 interface CategoryOption {
     id: string;
     name: string;
@@ -23,13 +24,15 @@ interface FarmerOption {
     id: string;
     name: string;
 }
+
 interface CreateProductFormProps {
     categories: CategoryOption[];
     farmers: FarmerOption[];
 }
+
 const CreateProductForm = ({
-   categories,
-   farmers,
+    categories,
+    farmers,
 }: CreateProductFormProps) => {
     const {
         register,
@@ -54,28 +57,43 @@ const CreateProductForm = ({
             farmerId: "",
         },
     });
+
     const onSubmit = async (data: ProductValidatedValues) => {
-        const result = await createProduct({
-            name: data.name,
-            description: data.description || undefined,
-            price: data.price,
-            quantity: data.quantity,
-            unit: data.unit,
-            image: data.image || undefined,
-            status: data.status,
-            categoryId: data.categoryId,
-            farmerId: data.farmerId,
-        });
-        toast.success(result?.message || "Product created successfully!"
-        );
-        reset();
+        try {
+            const result = await createProduct({
+                name: data.name,
+                description: data.description || undefined,
+                price: data.price,
+                quantity: data.quantity,
+                unit: data.unit,
+                image: data.image || undefined,
+                status: data.status,
+                categoryId: data.categoryId,
+                farmerId: data.farmerId,
+            });
+
+            toast.success(
+                result?.message || "Product created successfully!"
+            );
+
+            reset();
+        } catch {
+            toast.error("Failed to create product. Please try again.");
+        }
     };
+
     const inputClass = (hasError: boolean) =>
-        `h-12 w-full rounded-lg border bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:ring-4 ${
-            hasError ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
-                : "border-slate-200 focus:border-emerald-500 focus:ring-green-500/10"
-        }`;
-    const labelClass = "block text-sm font-medium text-slate-700";
+        `h-12 w-full rounded-lg border bg-white px-4 text-sm text-slate-900 outline-none transition-colors duration-200 placeholder:text-slate-400 focus:ring-4 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 ${
+    hasError
+        ? "border-red-300 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/50 dark:focus:border-red-400"
+        : "border-slate-200 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700 dark:focus:border-emerald-400"
+}`;
+
+    const labelClass = "block text-sm font-medium text-slate-700 dark:text-slate-300";
+    const errorClass = "text-xs font-medium text-red-500 dark:text-red-400";
+    const sectionTitleClass = "text-lg font-semibold text-slate-900 dark:text-white";
+    const helperClass = "text-sm text-slate-500 dark:text-slate-400";
+    const secondaryButtonClass = "inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800";
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
@@ -84,23 +102,26 @@ const CreateProductForm = ({
             {/* Basic Information */}
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-green-600">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">
                         <Package className="h-5 w-5" />
                     </div>
+
                     <div>
-                        <h2 className="text-lg font-semibold text-slate-900">
+                        <h2 className={sectionTitleClass}>
                             Basic Information
                         </h2>
-                        <p className="text-sm text-slate-500">
+                        <p className={helperClass}>
                             Enter your product details.
                         </p>
                     </div>
                 </div>
+
                 {/* Product Name */}
                 <div className="space-y-2">
                     <label htmlFor="name" className={labelClass}>
                         Product Name <span className="text-red-500">*</span>
                     </label>
+
                     <input
                         id="name"
                         type="text"
@@ -108,8 +129,9 @@ const CreateProductForm = ({
                         {...register("name")}
                         className={inputClass(!!errors.name)}
                     />
+
                     {errors.name && (
-                        <p className="text-xs font-medium text-red-500">
+                        <p className={errorClass}>
                             {errors.name.message}
                         </p>
                     )}
@@ -129,28 +151,28 @@ const CreateProductForm = ({
                         rows={5}
                         placeholder="Describe the product, its quality, and freshness..."
                         {...register("description")}
-                        className={`w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:ring-4 ${
-                            errors.description
-                                ? "border-red-300 focus:border-red-500 focus:ring-red-500/10"
-                                : "border-slate-200 focus:border-green-500 focus:ring-green-500/10"
+                        className={`w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-colors duration-200 placeholder:text-slate-400 focus:ring-4 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 ${
+                        errors.description
+                            ? "border-red-300 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/50"
+                            : "border-slate-200 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700 dark:focus:border-emerald-400"
                         }`}
                     />
 
                     {errors.description && (
-                        <p className="text-xs font-medium text-red-500">
+                        <p className={errorClass}>
                             {errors.description.message}
                         </p>
                     )}
                 </div>
             </section>
 
-            {/* Price and Quantity */}
+            {/* Pricing and Inventory */}
             <section className="space-y-6">
                 <div>
-                    <h2 className="text-lg font-semibold text-slate-900">
+                    <h2 className={sectionTitleClass}>
                         Pricing & Inventory
                     </h2>
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className={`mt-1 ${helperClass}`}>
                         Set the product price and available quantity.
                     </p>
                 </div>
@@ -174,7 +196,7 @@ const CreateProductForm = ({
                         />
 
                         {errors.price && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.price.message}
                             </p>
                         )}
@@ -198,7 +220,7 @@ const CreateProductForm = ({
                         />
 
                         {errors.quantity && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.quantity.message}
                             </p>
                         )}
@@ -225,7 +247,7 @@ const CreateProductForm = ({
                         </select>
 
                         {errors.unit && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.unit.message}
                             </p>
                         )}
@@ -248,7 +270,7 @@ const CreateProductForm = ({
                         </select>
 
                         {errors.status && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.status.message}
                             </p>
                         )}
@@ -257,7 +279,7 @@ const CreateProductForm = ({
             </section>
 
             {/* Category and Farmer */}
-            <section className="space-y-6 mt-3">
+            <section className="mt-3 space-y-6">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     {/* Category */}
                     <div className="space-y-2">
@@ -286,13 +308,13 @@ const CreateProductForm = ({
                         </select>
 
                         {errors.categoryId && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.categoryId.message}
                             </p>
                         )}
 
                         {categories.length === 0 && (
-                            <p className="text-xs text-amber-600">
+                            <p className="text-xs text-amber-600 dark:text-amber-400">
                                 No categories available. Create a category first.
                             </p>
                         )}
@@ -300,7 +322,10 @@ const CreateProductForm = ({
 
                     {/* Farmer */}
                     <div className="space-y-2">
-                        <label htmlFor="farmerId" className={labelClass}>
+                        <label
+                            htmlFor="farmerId"
+                            className={labelClass}
+                        >
                             Farmer <span className="text-red-500">*</span>
                         </label>
 
@@ -322,13 +347,13 @@ const CreateProductForm = ({
                         </select>
 
                         {errors.farmerId && (
-                            <p className="text-xs font-medium text-red-500">
+                            <p className={errorClass}>
                                 {errors.farmerId.message}
                             </p>
                         )}
 
                         {farmers.length === 0 && (
-                            <p className="text-xs text-amber-600">
+                            <p className="text-xs text-amber-600 dark:text-amber-400">
                                 No farmers available.
                             </p>
                         )}
@@ -338,7 +363,7 @@ const CreateProductForm = ({
 
             {/* Image */}
             <section className="space-y-6">
-                <div className="space-y-2 mt-2">
+                <div className="mt-2 space-y-2">
                     <label htmlFor="image" className={labelClass}>
                         Image URL
                     </label>
@@ -352,22 +377,22 @@ const CreateProductForm = ({
                     />
 
                     {errors.image && (
-                        <p className="text-xs font-medium text-red-500">
+                        <p className={errorClass}>
                             {errors.image.message}
                         </p>
                     )}
 
-                    {/*<p className="text-xs text-slate-400">*/}
-                    {/*    Use a valid, publicly accessible image URL.*/}
-                    {/*</p>*/}
+                    <p className="text-xs text-slate-400 dark:text-slate-500">
+                        Use a valid, publicly accessible image URL.
+                    </p>
                 </div>
             </section>
 
             {/* Actions */}
-            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
                 <Link
                     href="/dashboard/admin/products"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                    className={secondaryButtonClass}
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back to Products
@@ -378,7 +403,7 @@ const CreateProductForm = ({
                         type="button"
                         disabled={isSubmitting}
                         onClick={() => reset()}
-                        className="h-11 rounded-lg border border-slate-200 px-5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                        className={secondaryButtonClass}
                     >
                         Reset
                     </button>
@@ -390,7 +415,7 @@ const CreateProductForm = ({
                             categories.length === 0 ||
                             farmers.length === 0
                         }
-                        className="inline-flex h-11 min-w-[150px] items-center justify-center gap-2 rounded-lg bg-green-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex h-11 min-w-[150px] items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:ring-offset-slate-950"
                     >
                         {isSubmitting ? (
                             <>

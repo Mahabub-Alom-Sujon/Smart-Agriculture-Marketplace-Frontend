@@ -1,18 +1,54 @@
+// import { Plus, Tags } from "lucide-react";
+// import Link from "next/link";
+// export default function CategoriesHeader() {
+//     return (
+//         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+//             {/* Header Information */}
+//             <div className="flex items-start gap-3">
+//                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
+//                     <Tags className="h-5 w-5" />
+//                 </div>
+//                 <div>
+//                     <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+//                         Categories
+//                     </h1>
+//                     <p className="mt-1 text-sm text-slate-500">
+//                         Manage your product categories, organize products,
+//                         and keep your marketplace structured in one place.
+//                     </p>
+//                 </div>
+//             </div>
+//
+//             {/* Create Category Button */}
+//             <Link
+//                 href="/dashboard/admin/categories/create"
+//                 className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-green-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+//             >
+//                 <Plus className="h-4 w-4" />
+//                 Add Category
+//             </Link>
+//         </div>
+//     );
+// }
+
 import { Plus, Tags } from "lucide-react";
 import Link from "next/link";
+
 export default function CategoriesHeader() {
     return (
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between">
             {/* Header Information */}
             <div className="flex items-start gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600 transition-colors duration-300 dark:bg-green-500/15 dark:text-green-400">
                     <Tags className="h-5 w-5" />
                 </div>
+
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
                         Categories
                     </h1>
-                    <p className="mt-1 text-sm text-slate-500">
+
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                         Manage your product categories, organize products,
                         and keep your marketplace structured in one place.
                     </p>
@@ -22,7 +58,7 @@ export default function CategoriesHeader() {
             {/* Create Category Button */}
             <Link
                 href="/dashboard/admin/categories/create"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-green-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-green-600 px-4 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:bg-green-500 dark:hover:bg-green-600 dark:focus-visible:ring-offset-gray-950"
             >
                 <Plus className="h-4 w-4" />
                 Add Category
