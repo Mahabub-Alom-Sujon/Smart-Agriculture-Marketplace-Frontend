@@ -193,15 +193,15 @@ export function LoginForm() {
                                 Demo Admin
                             </Button>
 
-                            <Button
-                                type="button"
-                                variant="outline"
-                                className="h-11 border-green-200 text-green-600 hover:bg-green-600 hover:text-white"
-                                onClick={() => handleDemoLogin("FARMER")}
-                            >
-                                <User className="mr-2 h-4 w-4" />
-                                Demo Farmer
-                            </Button>
+                            {/*<Button*/}
+                            {/*    type="button"*/}
+                            {/*    variant="outline"*/}
+                            {/*    className="h-11 border-green-200 text-green-600 hover:bg-green-600 hover:text-white"*/}
+                            {/*    onClick={() => handleDemoLogin("FARMER")}*/}
+                            {/*>*/}
+                            {/*    <User className="mr-2 h-4 w-4" />*/}
+                            {/*    Demo Farmer*/}
+                            {/*</Button>*/}
                         </div>
                     </div>
 
